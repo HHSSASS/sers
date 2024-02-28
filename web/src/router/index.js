@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/home/HomeView.vue'
 import NoticeView from '../views/notice/NoticeView'
+import NoticeContentView from '../views/notice/NoticeContentView'
 import ShopView from '../views/shop/ShopView'
 import ServiceView from '../views/service/ServiceView'
 import SuperviseView from '../views/supervise/SuperviseView'
@@ -24,6 +25,11 @@ const routes = [
     path: '/notice/',
     name: 'notice_index',
     component:NoticeView
+  },
+  {
+    path:'/notice/:noticeId',
+    name:'notice_content',
+    component:NoticeContentView,
   },
   {
     path: '/shop/',

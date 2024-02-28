@@ -20,9 +20,15 @@
         <div class="col-4">
             <div style="display: flex;">
                 <div class="title">通知公告</div>
-                <div class="link" @click="notice">查看更多</div>
+                <div class="link" @click="to_notice">查看更多</div>
             </div>
             <div class="iconfont icon-hengxian1"></div>
+            <div style="padding-top: 40px; padding-left: 25px;color: rgb(220, 220, 220);">
+                <div @click="open_notice(notice.id)" v-for="notice in notices" :key="notice.id" style="padding-bottom: 15px;cursor: pointer;">
+                    <div style="font-size: 20px;">{{ notice.title.slice(0,20)+(notice.title.length<=10?"":"...") }}</div>
+                    <div>{{ notice.time.slice(0,10) }}</div>
+                </div>
+            </div>
         </div>
     </div>
     <div style="padding-top: 50px;">
@@ -42,14 +48,42 @@
 <script>
 import '@/assets/iconfont/iconfont.css'
 import router from '@/router/index'
+import { ref } from 'vue'
+import $ from 'jquery'
  
 export default{
     setup(){
-        const notice=()=>{
+        let notices=ref([]);
+        const pull_notice=()=>{
+            $.ajax({
+                url:"http://127.0.0.1:3000/api/notice/getlist/",
+                type:"get",
+                data:{
+                    page:1,
+                    number:6,
+                },
+                success(resp){
+                    notices.value=resp.notices;
+                },
+            })
+        }
+        pull_notice();
+
+        const open_notice=noticeId=>{
+            router.push({
+                name:"notice_content",
+                params:{
+                    noticeId:noticeId,
+                }
+            })
+        }
+        const to_notice=()=>{
             router.push({name:'notice_index'});
         }
         return{
-            notice,
+            notices,
+            open_notice,
+            to_notice,
         }
     }
 }

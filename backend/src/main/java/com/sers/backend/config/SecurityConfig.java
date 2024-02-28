@@ -40,7 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/api/user/account/login/",
-                        "/api/user/account/register/"
+                        "/api/user/account/register/",
+                        "/api/notice/add/",
+                        "/api/notice/getlist/",
+                        "/api/notice/get/"
                 ).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated();

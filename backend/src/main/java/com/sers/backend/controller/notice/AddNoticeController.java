@@ -1,7 +1,7 @@
 package com.sers.backend.controller.notice;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sers.backend.service.impl.notice.AddNoticeServiceImpl;
+import com.sers.backend.service.notice.AddNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,7 +12,7 @@ import java.util.Map;
 @RestController
 public class AddNoticeController {
     @Autowired
-    private AddNoticeServiceImpl addNoticeService;
+    private AddNoticeService addNoticeService;
 
     @PostMapping("/api/notice/add/")
     public JSONObject add(@RequestParam Map<String,String> data){

@@ -1,29 +1,27 @@
 <template>
-    <div class="background">
-        <div class="card">
-            <div class="card-body">
-                <div style="padding-left: 80px;font-size: 40px;">
-                    <img src="@/assets/images/logo.png" alt="" width="50px">
-                    SERS
-                </div>
-                <form @submit.prevent="register" style="margin-top: 20px;">
-                    <div class="mb-3">
-                        <label for="username" class="form-label">用户名</label>
-                        <input v-model="username" type="text" class="form-control" id="username" placeholder="请输入用户名">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">密码</label>
-                        <input v-model="password" type="password" class="form-control" id="password" placeholder="请输入密码">
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirmPassword" class="form-label">确认密码</label>
-                        <input v-model="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="请再次输入密码">
-                    </div>
-                    <div class="error-message">{{message}}</div>
-                    <div @click="login" class="login">已有账号？立即登录！</div>
-                    <button type="submit" class="btn btn-primary">注册</button>
-                </form>
+    <div class="card">
+        <div class="card-body">
+            <div style="padding-left: 80px;font-size: 40px;">
+                <img src="@/assets/images/logo.png" alt="" width="50px">
+                SERS
             </div>
+            <form @submit.prevent="register" style="margin-top: 20px;">
+                <div class="mb-3">
+                    <label for="username" class="form-label">用户名</label>
+                    <input v-model="username" type="text" class="form-control" id="username" placeholder="请输入用户名">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">密码</label>
+                    <input v-model="password" type="password" class="form-control" id="password" placeholder="请输入密码">
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">确认密码</label>
+                    <input v-model="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="请再次输入密码">
+                </div>
+                <div class="error-message">{{message}}</div>
+                <div @click="login" class="login">已有账号？立即登录！</div>
+                <button type="submit" class="btn btn-primary">注册</button>
+            </form>
         </div>
     </div>
 </template>
@@ -70,20 +68,21 @@ export default{
             register,
             login,
         }
+    },
+    beforeMount () {
+        document.querySelector('body').setAttribute('style', "background-image: url("+require("@/assets/images/photo.png")+");background-size: cover;")
+    },
+    beforeUnmount () {
+      document.querySelector('body').removeAttribute('style')
     }
 }
 </script>
 
 <style scoped>
-div.background{
-    background-image: url("@/assets/images/photo.png");
-    position:absolute;
-    width:100%;
-    height:93.85%;
-}
 div.card{
-    margin-left: 1100px;
-    margin-top: 150px;
+    float: right;
+    margin-right: 10%;
+    margin-top: 10%;
     width: 400px;
     height: 480px;
 }
