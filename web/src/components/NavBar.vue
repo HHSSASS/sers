@@ -40,10 +40,10 @@
         </ul>
         <ul class="navbar-nav" v-else-if="!$store.state.user.is_login">
           <li class="nav-item">
-            <router-link class='nav-link' :to="{name:'user_login'}">登录</router-link>
+            <router-link class='nav-link' :to="{name:'user_account_login'}">登录</router-link>
           </li>
           <li class="nav-item">
-            <router-link class='nav-link' :to="{name:'user_register'}">注册</router-link>
+            <router-link class='nav-link' :to="{name:'user_account_register'}">注册</router-link>
           </li>
         </ul>
       </div>

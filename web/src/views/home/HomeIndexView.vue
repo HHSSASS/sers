@@ -43,6 +43,7 @@
         <div class="title">技术监督</div>
         <div class="iconfont icon-hengxian1"></div>
     </div>
+    <div @click="to_chat" class="iconfont icon-rengongkefu"></div>
 </template>
 
 <script>
@@ -80,27 +81,46 @@ export default{
         const to_notice=()=>{
             router.push({name:'notice_index'});
         }
+        const to_chat=()=>{
+            router.push({name:'chat_index'});
+        }
         return{
             notices,
             open_notice,
             to_notice,
+            to_chat,
         }
+    },
+    beforeMount () {
+        document.querySelector('body').setAttribute('style', "background-color:rgb(5,5,5);")
+    },
+    beforeUnmount () {
+      document.querySelector('body').removeAttribute('style')
     }
 }
 </script>
 
 <style scoped>
-div{
-    background-color: rgb(5,5,5);
-}
 div.title{
     padding-left: 20px;
     font-size:30px ;
     color: rgb(220, 220, 220);
 }
-div.iconfont{
+div.iconfont.icon-hengxian1{
     color: rgb(7, 83, 169) ;
     font-size: 15px;
+}
+div.iconfont.icon-rengongkefu{
+    border-radius: 100%;
+    background-color: white;
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    position: fixed;
+    right: 2%;
+    top: 80%;
+    cursor: pointer;
 }
 div.content{
     padding-top: 20px;

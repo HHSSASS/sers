@@ -1,14 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/home/HomeView.vue'
-import NoticeView from '../views/notice/NoticeView'
+import HomeIndexView from '../views/home/HomeIndexView.vue'
+import NoticeIndexView from '../views/notice/NoticeIndexView'
 import NoticeContentView from '../views/notice/NoticeContentView'
-import ShopView from '../views/shop/ShopView'
-import ServiceView from '../views/service/ServiceView'
-import SuperviseView from '../views/supervise/SuperviseView'
-import UserView from '../views/user/UserView'
-import UserLoginView from '../views/user/UserLoginView'
-import UserRegisterView from '../views/user/UserRegisterView'
+import ShopIndexView from '../views/shop/ShopIndexView'
+import ServiceIndexView from '../views/service/ServiceIndexView'
+import SuperviseIndexView from '../views/supervise/SuperviseIndexView'
+import UserIndexView from '../views/user/UserIndexView'
+import UserAccountLoginView from '../views/user/account/UserAccountLoginView'
+import UserAccountRegisterView from '../views/user/account/UserAccountRegisterView'
 import NotFound from "../views/error/NotFound"
+import ChatIndexView from "../views/chat/ChatIndexView"
+import store from '../store/index'
 
 const routes = [
   {
@@ -19,52 +21,90 @@ const routes = [
   {
     path: '/home/',
     name: 'home_index',
-    component:HomeView
+    component:HomeIndexView,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path: '/notice/',
     name: 'notice_index',
-    component:NoticeView
+    component:NoticeIndexView,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path:'/notice/:noticeId',
     name:'notice_content',
     component:NoticeContentView,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path: '/shop/',
     name: 'shop_index',
-    component:ShopView
+    component:ShopIndexView,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path: '/service/',
     name: 'service_index',
-    component:ServiceView
+    component:ServiceIndexView,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path: '/supervise/',
     name: 'supervise_index',
-    component:SuperviseView
+    component:SuperviseIndexView,
+    meta:{
+      requestAuth:false,
+    },
+  },
+  {
+    path:'/chat/',
+    name:'chat_index',
+    component:ChatIndexView,
+    meta:{
+      requestAuth:true,
+    },
   },
   {
     path: '/user/',
     name: 'user_index',
-    component:UserView
+    component:UserIndexView,
+    meta:{
+      requestAuth:true,
+    },
   },
   {
     path: '/user/login/',
-    name: 'user_login',
-    component:UserLoginView
+    name: 'user_account_login',
+    component:UserAccountLoginView,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path: '/user/register/',
-    name: 'user_register',
-    component:UserRegisterView
+    name: 'user_account_register',
+    component:UserAccountRegisterView,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path:"/404/",
     name:"404",
     component:NotFound,
+    meta:{
+      requestAuth:false,
+    },
   },
   {
     path:"/:catchAll(.*)",
@@ -75,6 +115,27 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to,from,next)=>{
+  if(to.meta.requestAuth&&!store.state.user.is_login){
+    const jwt_token=localStorage.getItem("jwt_token");
+    if(jwt_token){
+      store.commit("updateToken",jwt_token);
+      store.dispatch("getinfo",{
+          success(){
+              next();
+          },
+          error(){
+              next({name:"user_account_login"});
+          },
+      })
+    }else{
+      next({name:"user_account_login"});
+    }
+  }else{
+    next();
+  }
 })
 
 export default router
