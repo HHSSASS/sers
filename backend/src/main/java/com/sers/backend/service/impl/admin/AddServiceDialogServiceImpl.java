@@ -1,10 +1,10 @@
-package com.sers.backend.service.impl.chat;
+package com.sers.backend.service.impl.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sers.backend.mapper.DialogMapper;
 import com.sers.backend.pojo.Dialog;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.chat.AddDialogService;
+import com.sers.backend.service.admin.AddServiceDialogService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,17 +14,21 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-public class AddDialogServiceImpl implements AddDialogService {
+public class AddServiceDialogServiceImpl implements AddServiceDialogService {
     @Autowired
     private DialogMapper dialogMapper;
 
     @Override
-    public JSONObject add(String content) {
+    public JSONObject add(Integer id, String content) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
         User user = loginUser.getUser();
         JSONObject resp=new JSONObject();
+        if(!user.getAdmin()){
+            resp.put("message","无管理员权限");
+            return resp;
+        }
         if(content.length()==0) {
             resp.put("message", "内容不能为空");
             return resp;
@@ -34,7 +38,7 @@ public class AddDialogServiceImpl implements AddDialogService {
             return resp;
         }
         Date now=new Date();
-        Dialog dialog=new Dialog(null,user.getId(),0,content,now);
+        Dialog dialog=new Dialog(null,0,id,content,now);
         dialogMapper.insert(dialog);
         resp.put("message","successful");
         return resp;

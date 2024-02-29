@@ -1,42 +1,40 @@
-package com.sers.backend.service.impl.chat;
+package com.sers.backend.service.impl.admin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sers.backend.mapper.DialogMapper;
 import com.sers.backend.pojo.Dialog;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.chat.AddDialogService;
+import com.sers.backend.service.admin.GetlistServiceDialogService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
 
 @Service
-public class AddDialogServiceImpl implements AddDialogService {
+public class GetlistServiceDialogServiceImpl implements GetlistServiceDialogService {
     @Autowired
     private DialogMapper dialogMapper;
 
     @Override
-    public JSONObject add(String content) {
+    public JSONObject getlist(Integer id) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
         User user = loginUser.getUser();
         JSONObject resp=new JSONObject();
-        if(content.length()==0) {
-            resp.put("message", "内容不能为空");
+        if(!user.getAdmin()){
+            resp.put("message","无管理员权限");
             return resp;
         }
-        if(content.length()>500){
-            resp.put("message","内容长度不能大于500");
-            return resp;
-        }
-        Date now=new Date();
-        Dialog dialog=new Dialog(null,user.getId(),0,content,now);
-        dialogMapper.insert(dialog);
+        QueryWrapper<Dialog> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("send_user_id",id).or().eq("receive_user_id",id);
+        List<Dialog> dialogs=dialogMapper.selectList(queryWrapper);
         resp.put("message","successful");
+        resp.put("data",dialogs);
         return resp;
     }
 }

@@ -10,6 +10,7 @@ import UserAccountLoginView from '../views/user/account/UserAccountLoginView'
 import UserAccountRegisterView from '../views/user/account/UserAccountRegisterView'
 import NotFound from "../views/error/NotFound"
 import ChatIndexView from "../views/chat/ChatIndexView"
+import AdminIndexView from "../views/admin/AdminIndexView"
 import store from '../store/index'
 
 const routes = [
@@ -75,6 +76,14 @@ const routes = [
     },
   },
   {
+    path:'/admin/',
+    name:'admin_index',
+    component:AdminIndexView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
     path: '/user/',
     name: 'user_index',
     component:UserIndexView,
@@ -83,7 +92,7 @@ const routes = [
     },
   },
   {
-    path: '/user/login/',
+    path: '/user/account/login/',
     name: 'user_account_login',
     component:UserAccountLoginView,
     meta:{
@@ -91,7 +100,7 @@ const routes = [
     },
   },
   {
-    path: '/user/register/',
+    path: '/user/account/register/',
     name: 'user_account_register',
     component:UserAccountRegisterView,
     meta:{
@@ -118,7 +127,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to,from,next)=>{
-  if(to.meta.requestAuth&&!store.state.user.is_login){
+  if(!store.state.user.is_login){
     const jwt_token=localStorage.getItem("jwt_token");
     if(jwt_token){
       store.commit("updateToken",jwt_token);
@@ -127,11 +136,21 @@ router.beforeEach((to,from,next)=>{
               next();
           },
           error(){
+            if(to.meta.requestAuth){
               next({name:"user_account_login"});
+            }
+            else{
+              next();
+            }
           },
       })
     }else{
-      next({name:"user_account_login"});
+      if(to.meta.requestAuth){
+        next({name:"user_account_login"});
+      }
+      else{
+        next();
+      }
     }
   }else{
     next();

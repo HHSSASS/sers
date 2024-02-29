@@ -1,5 +1,6 @@
 package com.sers.backend.service.impl.user.account;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sers.backend.pojo.User;
 import com.sers.backend.utils.UserDetailsImpl;
 import com.sers.backend.service.user.account.LoginService;
@@ -18,16 +19,16 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Override
-    public Map<String, String> getToken(String username, String password) {
+    public JSONObject login(String username, String password) {
         UsernamePasswordAuthenticationToken authenticationToken=
                 new UsernamePasswordAuthenticationToken(username,password);
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         UserDetailsImpl loginUser=(UserDetailsImpl)authenticate.getPrincipal();
         User user=loginUser.getUser();
         String jwt= JwtUtil.createJWT(user.getId().toString());
-        Map<String,String> map=new HashMap<>();
-        map.put("message","successful");
-        map.put("token",jwt);
-        return map;
+        JSONObject resp= new JSONObject();
+        resp.put("message","successful");
+        resp.put("token",jwt);
+        return resp;
     }
 }

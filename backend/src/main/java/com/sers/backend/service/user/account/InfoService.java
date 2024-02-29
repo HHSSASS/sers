@@ -1,7 +1,8 @@
 package com.sers.backend.service.user.account;
 
-import java.util.Map;
+import com.alibaba.fastjson.JSONObject;
+
 
 public interface InfoService {
-    Map<String,String> getinfo();
+    JSONObject getinfo();
 }

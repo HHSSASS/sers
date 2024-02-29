@@ -1,7 +1,8 @@
 package com.sers.backend.service.user.account;
 
-import java.util.Map;
+import com.alibaba.fastjson.JSONObject;
+
 
 public interface LoginService {
-    Map<String,String> getToken(String username,String password);
+    JSONObject login(String username, String password);
 }

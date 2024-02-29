@@ -1,7 +1,8 @@
 package com.sers.backend.service.user.account;
 
-import java.util.Map;
+import com.alibaba.fastjson.JSONObject;
+
 
 public interface RegisterService {
-    Map<String,String> register(String username,String password,String confirmPassword);
+    JSONObject register(String username, String password, String confirmPassword);
 }

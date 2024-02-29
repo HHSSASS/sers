@@ -4,8 +4,10 @@ export default{
     state: {
         id:"",
         username:"",
+        admin:false,
         token:"",
         is_login:false,
+        socket:null,
     },
     getters: {
     },
@@ -13,14 +15,19 @@ export default{
         updateUser(state,user){
             state.id=user.id;
             state.username=user.username;
+            state.admin=user.admin;
             state.is_login=user.is_login;
         },
         updateToken(state,token){
             state.token=token;
         },
+        updateSocket(state,socket){
+            state.socket=socket;
+        },
         logout(state){
             state.id="";
             state.username="";
+            state.admin=false;
             state.token="";
             state.is_login=false;
         },
