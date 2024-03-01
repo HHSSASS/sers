@@ -23,7 +23,7 @@
             <router-link :class="route_name == 'service_index' ? 'nav-link active' : 'nav-link'" :to="{name:'service_index'}">会员服务</router-link>
           </li>
           <li class="nav-item">
-            <router-link :class="route_name == 'supervise_index' ? 'nav-link active' : 'nav-link'" :to="{name:'supervise_index'}">技术监督</router-link>
+            <router-link :class="route_name == 'monitor_index' ? 'nav-link active' : 'nav-link'" :to="{name:'monitor_index'}">监测平台</router-link>
           </li>
         </ul>
         <ul class="navbar-nav me-5" v-if="$store.state.user.is_login">
@@ -32,8 +32,6 @@
               {{$store.state.user.username}}
             </a>
             <ul class="dropdown-menu">
-              <li><router-link class="dropdown-item" :to="{name:'user_index'}">个人中心</router-link></li>
-              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#" @click="logout">退出登录</a></li>
             </ul>
           </li>

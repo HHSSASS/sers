@@ -34,16 +34,18 @@
     <div style="padding-top: 50px;">
         <div class="title">线上商城</div>
         <div class="iconfont icon-hengxian1"></div>
+        <div style="display: flex; padding-left: 50px;padding-top:50px;">
+            <img src="@/assets/images/3.0.png" alt="" width="20%" height="20%">
+            <div>
+                <div class="content">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    “菌”队间谍芯片是一款专为水体抗生素监测而设计的智能化监测芯片。利用自清洁SERS复合基底技术，该芯片能够高效捕获水体中微量抗生素，并通过微流控SERS芯片集成技术实现自动化样品处理和快速检测。其高灵敏度、稳定性和耐用性，使其成为水质监测领域的强有力工具。
+                </div>
+                <button @click="to_shop" type="button" class="btn btn-primary btn-lg">立即购买</button>
+            </div>
+        </div>
     </div>
-    <div style="padding-top: 50px;">
-        <div class="title">会员服务</div>
-        <div class="iconfont icon-hengxian1"></div>
-    </div>
-    <div style="padding-top: 50px;">
-        <div class="title">技术监督</div>
-        <div class="iconfont icon-hengxian1"></div>
-    </div>
-    <div @click="to_chat" class="iconfont icon-rengongkefu"></div>
+    <div @click="to_service" class="iconfont icon-rengongkefu"></div>
 </template>
 
 <script>
@@ -81,14 +83,18 @@ export default{
         const to_notice=()=>{
             router.push({name:'notice_index'});
         }
-        const to_chat=()=>{
-            router.push({name:'chat_index'});
+        const to_shop=()=>{
+            router.push({name:'shop_index'});
+        }
+        const to_service=()=>{
+            router.push({name:'service_index'});
         }
         return{
             notices,
             open_notice,
             to_notice,
-            to_chat,
+            to_shop,
+            to_service,
         }
     },
     beforeMount () {
@@ -134,5 +140,11 @@ div.link{
     padding-top: 15px;
     padding-left: 20px; 
     color: rgb(0, 119, 255) ;
+}
+.btn{
+    border-radius: 0px;
+    float: right;
+    margin-top: 50px;
+    margin-right: 200px;
 }
 </style>

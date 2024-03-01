@@ -4,12 +4,10 @@ import NoticeIndexView from '../views/notice/NoticeIndexView'
 import NoticeContentView from '../views/notice/NoticeContentView'
 import ShopIndexView from '../views/shop/ShopIndexView'
 import ServiceIndexView from '../views/service/ServiceIndexView'
-import SuperviseIndexView from '../views/supervise/SuperviseIndexView'
-import UserIndexView from '../views/user/UserIndexView'
+import MonitorIndexView from '../views/monitor/MonitorIndexView'
 import UserAccountLoginView from '../views/user/account/UserAccountLoginView'
 import UserAccountRegisterView from '../views/user/account/UserAccountRegisterView'
 import NotFound from "../views/error/NotFound"
-import ChatIndexView from "../views/chat/ChatIndexView"
 import AdminIndexView from "../views/admin/AdminIndexView"
 import store from '../store/index'
 
@@ -48,7 +46,7 @@ const routes = [
     name: 'shop_index',
     component:ShopIndexView,
     meta:{
-      requestAuth:false,
+      requestAuth:true,
     },
   },
   {
@@ -56,21 +54,13 @@ const routes = [
     name: 'service_index',
     component:ServiceIndexView,
     meta:{
-      requestAuth:false,
+      requestAuth:true,
     },
   },
   {
-    path: '/supervise/',
-    name: 'supervise_index',
-    component:SuperviseIndexView,
-    meta:{
-      requestAuth:false,
-    },
-  },
-  {
-    path:'/chat/',
-    name:'chat_index',
-    component:ChatIndexView,
+    path: '/monitor/',
+    name: 'monitor_index',
+    component:MonitorIndexView,
     meta:{
       requestAuth:true,
     },
@@ -79,14 +69,6 @@ const routes = [
     path:'/admin/',
     name:'admin_index',
     component:AdminIndexView,
-    meta:{
-      requestAuth:true,
-    },
-  },
-  {
-    path: '/user/',
-    name: 'user_index',
-    component:UserIndexView,
     meta:{
       requestAuth:true,
     },
