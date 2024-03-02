@@ -1,25 +1,23 @@
-package com.sers.backend.service.impl.admin;
+package com.sers.backend.service.impl.admin.notice;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sers.backend.mapper.NoticeMapper;
 import com.sers.backend.pojo.Notice;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.AddNoticeService;
+import com.sers.backend.service.admin.notice.UpdateNoticeService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
-public class AddNoticeServiceImpl implements AddNoticeService {
+public class UpdateNoticeServiceImpl implements UpdateNoticeService {
     @Autowired
     private NoticeMapper noticeMapper;
 
     @Override
-    public JSONObject add(String title,String content) {
+    public JSONObject update(Integer id, String title, String content) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
@@ -45,9 +43,9 @@ public class AddNoticeServiceImpl implements AddNoticeService {
             resp.put("message","内容长度大于超过1000");
             return resp;
         }
-        Date now=new Date();
-        Notice notice=new Notice(null,title,content,now);
-        noticeMapper.insert(notice);
+        Notice notice=noticeMapper.selectById(id);
+        Notice new_notice=new Notice(notice.getId(),title,content,notice.getTime());
+        noticeMapper.updateById(new_notice);
         resp.put("message","successful");
         return resp;
     }

@@ -1,4 +1,4 @@
-package com.sers.backend.service.admin;
+package com.sers.backend.service.admin.notice;
 
 import com.alibaba.fastjson.JSONObject;
 

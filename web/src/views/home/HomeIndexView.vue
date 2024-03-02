@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div style="padding-top: 50px;">
+    <div style="padding-top: 50px;padding-bottom: 50px;">
         <div class="title">线上商城</div>
         <div class="iconfont icon-hengxian1"></div>
         <div style="display: flex; padding-left: 50px;padding-top:50px;">
@@ -39,7 +39,7 @@
             <div>
                 <div class="content">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    “菌”队间谍芯片是一款专为水体抗生素监测而设计的智能化监测芯片。利用自清洁SERS复合基底技术，该芯片能够高效捕获水体中微量抗生素，并通过微流控SERS芯片集成技术实现自动化样品处理和快速检测。其高灵敏度、稳定性和耐用性，使其成为水质监测领域的强有力工具。
+                    “菌”探卫士芯片是一款专为水体抗生素监测而设计的智能化监测芯片。利用自清洁SERS复合基底技术，该芯片能够高效捕获水体中微量抗生素，并通过微流控SERS芯片集成技术实现自动化样品处理和快速检测。其高灵敏度、稳定性和耐用性，使其成为水质监测领域的强有力工具。
                 </div>
                 <button @click="to_shop" type="button" class="btn btn-primary btn-lg">立即购买</button>
             </div>

@@ -5,10 +5,17 @@ import NoticeContentView from '../views/notice/NoticeContentView'
 import ShopIndexView from '../views/shop/ShopIndexView'
 import ServiceIndexView from '../views/service/ServiceIndexView'
 import MonitorIndexView from '../views/monitor/MonitorIndexView'
+import MonitorContentView from '../views/monitor/MonitorContentView'
 import UserAccountLoginView from '../views/user/account/UserAccountLoginView'
 import UserAccountRegisterView from '../views/user/account/UserAccountRegisterView'
 import NotFound from "../views/error/NotFound"
 import AdminIndexView from "../views/admin/AdminIndexView"
+import AdminPermissionView from "../views/admin/AdminPermissionView"
+import AdminNoticeView from "../views/admin/AdminNoticeView"
+import AdminShopView from "../views/admin/AdminShopView"
+import AdminGpsView from "../views/admin/AdminGpsView"
+import AdminOrderView from "../views/admin/AdminOrderView.vue"
+import AdminServiceView from "../views/admin/AdminServiceView"
 import store from '../store/index'
 
 const routes = [
@@ -66,9 +73,65 @@ const routes = [
     },
   },
   {
+    path: '/monitor/:gpsId',
+    name: 'monitor_content',
+    component:MonitorContentView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
     path:'/admin/',
     name:'admin_index',
     component:AdminIndexView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
+    path:'/admin/permission/',
+    name:'admin_permission',
+    component:AdminPermissionView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
+    path:'/admin/notice/',
+    name:'admin_notice',
+    component:AdminNoticeView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
+    path:'/admin/shop/',
+    name:'admin_shop',
+    component:AdminShopView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
+    path:'/admin/gps/',
+    name:'admin_gps',
+    component:AdminGpsView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
+    path:'/admin/order/',
+    name:'admin_order',
+    component:AdminOrderView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
+    path:'/admin/service/',
+    name:'admin_service',
+    component:AdminServiceView,
     meta:{
       requestAuth:true,
     },

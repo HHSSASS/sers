@@ -1,18 +1,13 @@
 <template>
     <AdminNavbar></AdminNavbar>
-    <ContentField>
-        <div style="text-align: center;">尊敬的管理员您好，欢迎进入管理系统！</div>
-    </ContentField>
 </template>
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
-import ContentField from '@/components/ContentField.vue'
 
 export default{
     components:{
         AdminNavbar,
-        ContentField,
     },
     setup(){
         
@@ -21,7 +16,7 @@ export default{
         document.querySelector('body').setAttribute('style', "background-image: url("+require("@/assets/images/photo.png")+");background-size: cover;")
     },
     beforeUnmount () {
-      document.querySelector('body').removeAttribute('style')
+        document.querySelector('body').removeAttribute('style')
     }
 }
 </script>

@@ -46,7 +46,7 @@
         </ul>
         <ul class="navbar-nav" v-if="$store.state.user.admin">
           <li class="nav-item">
-            <router-link class="nav-link" :to="{name:'admin_index'}">管理员入口</router-link>
+            <router-link class="nav-link" :to="{name:'admin_index'}">管理系统</router-link>
           </li>
         </ul>
       </div>

@@ -1,4 +1,5 @@
 <template>
+    <AdminNavbar></AdminNavbar>
     <ContentField>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_gps" style="border-radius: 0px;">添加芯片</button>
         <div class="modal fade" id="add_gps" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -10,7 +11,11 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">芯片序列号</label>
-                            <textarea v-model="new_gps.number" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="请输入产品序列号"></textarea>
+                            <textarea v-model="new_gps.number" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="请输入序列号"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">芯片型号</label>
+                            <textarea v-model="new_gps.type" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="请输入型号"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -27,8 +32,8 @@
                     <tr>
                         <th>序列号</th>
                         <th>型号</th>
-                        <th>激活时间</th>
-                        <th>操作</th>
+                        <th>添加时间</th>
+                        <th>所属用户</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +48,7 @@
                             <span>{{ gps.time.slice(0,10) }}</span>
                         </td>
                         <td>
-                            <button @click="open_monitor(gps.id)" type="button" class="btn btn-secondary" style="border-radius: 0px;">实时监测</button>
+                            <span>{{ gps.userId }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -62,8 +67,8 @@
 </template>
 
 <script>
+import AdminNavbar from '@/components/AdminNavbar.vue'
 import ContentField from '@/components/ContentField.vue'
-import router from '@/router'
 import { Modal } from 'bootstrap/dist/js/bootstrap'
 import $ from 'jquery'
 import { ref,reactive } from 'vue'
@@ -71,6 +76,7 @@ import { useStore } from 'vuex'
 
 export default{
     components:{
+        AdminNavbar,
         ContentField,
     },
     setup(){
@@ -81,37 +87,32 @@ export default{
         let current_page=1;
         const new_gps=reactive({
             number:"",
+            type:"",
             message:"",
         });
         const add_gps=()=>{
             new_gps.message="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/monitor/add/",
+                url:"http://127.0.0.1:3000/api/admin/gps/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
                 },
                 data:{
                     number:new_gps.number,
+                    type:new_gps.type,
                 },
                 success(resp){
                     if(resp.message==="successful"){
                         Modal.getInstance("#add_gps").hide();
                         new_gps.number="";
+                        new_gps.type="";
                         pull_page(1);
                     }
                     else{
                         new_gps.message=resp.message;
                     }
                 },
-            })
-        }
-        const open_monitor=id=>{
-            router.push({
-                name:'monitor_content',
-                params:{
-                    gpsId:id,
-                }
             })
         }
         const click_page=page=>{
@@ -138,7 +139,7 @@ export default{
         const pull_page=page=>{
             current_page=page;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/monitor/getlist/",
+                url:"http://127.0.0.1:3000/api/admin/gps/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -162,7 +163,6 @@ export default{
             pages,
             click_page,
             add_gps,
-            open_monitor,
         }
     },
     beforeMount () {
