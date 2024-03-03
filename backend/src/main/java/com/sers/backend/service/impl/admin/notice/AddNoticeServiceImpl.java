@@ -34,7 +34,7 @@ public class AddNoticeServiceImpl implements AddNoticeService {
             return resp;
         }
         if(title.length()>100){
-            resp.put("message","标题长度大于超过100");
+            resp.put("message","标题长度不能大于100");
             return resp;
         }
         if(content==null||content.length()==0){
@@ -42,7 +42,7 @@ public class AddNoticeServiceImpl implements AddNoticeService {
             return resp;
         }
         if(content.length()>1000){
-            resp.put("message","内容长度大于超过1000");
+            resp.put("message","内容长度不能大于1000");
             return resp;
         }
         Date now=new Date();

@@ -32,7 +32,7 @@ public class UpdateNoticeServiceImpl implements UpdateNoticeService {
             return resp;
         }
         if(title.length()>100){
-            resp.put("message","标题长度大于超过100");
+            resp.put("message","标题长度不能大于过100");
             return resp;
         }
         if(content==null||content.length()==0){
@@ -40,10 +40,14 @@ public class UpdateNoticeServiceImpl implements UpdateNoticeService {
             return resp;
         }
         if(content.length()>1000){
-            resp.put("message","内容长度大于超过1000");
+            resp.put("message","内容长度不能大于1000");
             return resp;
         }
         Notice notice=noticeMapper.selectById(id);
+        if(notice==null){
+            resp.put("message","通知不存在或已被删除");
+            return resp;
+        }
         Notice new_notice=new Notice(notice.getId(),title,content,notice.getTime());
         noticeMapper.updateById(new_notice);
         resp.put("message","successful");

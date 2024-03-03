@@ -48,8 +48,8 @@
                         <td>
                             <div style="display: flex;justify-content: center;">
                                 <div class="op" @click="open_notice(notice.id)">查看</div>                                         
-                                <div class="op" data-bs-toggle="modal" data-bs-target="#update_notice">修改</div>        
-                                <div class="modal fade" id="update_notice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="op" data-bs-toggle="modal" :data-bs-target="'#update_notice'+notice.id">修改</div>        
+                                <div class="modal fade" :id="'update_notice'+notice.id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg" style="text-align: left;">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -70,7 +70,7 @@
                                         <div class="modal-footer">
                                             <div class="error-message" style="float: right;color: red;">{{ notice.message }}</div>
                                             <button type="button" class="btn btn-primary" @click="update_notice(notice)">修改</button>
-                                            <button type="button" class="btn btn-secondary" @click="cancel">取消</button>
+                                            <button type="button" class="btn btn-secondary" @click="cancel(notice.id)">取消</button>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@ export default{
                 },
                 success(resp){
                     if(resp.message==="successful"){
-                        Modal.getInstance("#update_notice").hide();
+                        Modal.getInstance('#update_notice'+notice.id).hide();
                         pull_page(current_page);
                     }
                     else{
@@ -185,8 +185,8 @@ export default{
                 },
             })
         }
-        const cancel=()=>{
-            Modal.getInstance("#update_notice").hide();
+        const cancel=(id)=>{
+            Modal.getInstance('#update_notice'+id).hide();
             pull_page(current_page);
         }
         const click_page=page=>{

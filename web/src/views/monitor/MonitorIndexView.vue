@@ -147,7 +147,6 @@ export default{
                     page:page,
                 },
                 success(resp){
-                    console.log(resp);
                     gpss.value=resp.gpss;
                     total_gpss=resp.gpss_count;
                     update_pages();

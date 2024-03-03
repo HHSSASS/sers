@@ -5,27 +5,27 @@
             <div style="font-size: 50px;">“菌”探卫士</div>
             <div>基于SERS复合基底的智能水体抗生素监测芯片</div>
             <div class="row">
-                <div class="card border-dark" style="width: 17rem;margin-right: 10px;text-align: center;">
-                    <img src="@/assets/images/1.0.png" class="card-img-top" alt="">
+                <div v-for="product in products" :key="product.id" class="card border-dark" style="width: 16.5rem;margin-right: 10px;margin-bottom: 10px;text-align: center;">
+                    <img :src="require('@/assets/images/'+product.id+'.png')" class="card-img-top" alt="">
                     <div class="card-body">
-                        <h5 class="card-title">Gps1.0</h5>
-                        <p class="card-text">￥166</p>
-                        <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">产品详情</a>
-                        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel" style="width: 600px;text-align: left;">
+                        <h5 class="card-title">{{ product.name.slice(0,10)+(product.name.length<=10?"":"...") }}</h5>
+                        <p class="card-text">￥{{ product.price }}</p>
+                        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" :data-bs-target="'#product'+product.id" aria-controls="offcanvasExample">产品详情</button>
+                        <div class="offcanvas offcanvas-end" tabindex="-1" :id="'product'+product.id" aria-labelledby="offcanvasExampleLabel" style="width: 700px;text-align: left;">
                             <div class="offcanvas-header" style="border-bottom: 1px solid black;">
                                 <h5 class="offcanvas-title" id="offcanvasExampleLabel">产品详情</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                             </div>
                             <div class="offcanvas-body" style="background-color: rgb(230, 230, 230);">
                                 <div style="background-color: white;border-radius: 8px;">
-                                    <div class="item">产品名称：</div>
-                                    <div class="item">产品简介：</div>
+                                    <div class="item">产品名称：{{ product.name }}</div>
+                                    <div class="item">产品简介：{{ product.description }}</div>
                                 </div>
                             </div>
                             <div style="border-top: 1px solid black;">
                                 <div>订单详情</div>
                                 <div>用户名：{{ $store.state.user.username }}</div>
-                                <div>购买数量：</div>
+                                <div>购买数量：1</div>
                                 <div>支付方式：</div>
                                 <div style="display: flex;">
                                     <div class="form-check">
@@ -35,44 +35,29 @@
                                         </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"  style="margin-top: 25px;" checked>
                                         <label class="form-check-label" for="flexRadioDefault2">
                                             <div class="iconfont icon-alipay" style="font-size: 50px;"></div>
                                         </label>
                                     </div>
                                 </div>
                                 <div  style="display: flex; justify-content: flex-end;align-items: flex-end;">
-                                    支付金额：
+                                    支付金额：￥{{ product.price }}
                                     <button type="button" class="btn btn-primary" style="border-radius: 0px;">立即购买</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="card border-dark" style="width: 17rem;margin-right: 10px;text-align: center;">
-                    <img src="@/assets/images/2.0.png" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">Gps2.0</h5>
-                        <p class="card-text">￥288</p>
-                        <a href="#" class="btn btn-primary">立即购买</a>
-                    </div>
-                </div>
-                <div class="card border-dark" style="width: 17rem;margin-right: 10px;text-align: center;">
-                    <img src="@/assets/images/3.0.png" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">Gps3.0</h5>
-                        <p class="card-text">￥366</p>
-                        <a href="#" class="btn btn-primary">立即购买</a>
-                    </div>
-                </div>
-                <div class="card border-dark" style="width: 17rem;text-align: center;">
-                    <img src="@/assets/images/camera.jpg" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">远程摄像头</h5>
-                        <p class="card-text">￥40</p>
-                        <a href="#" class="btn btn-primary">立即购买</a>
-                    </div>
-                </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination" style="float: right;">
+                        <li @click="click_page(-2)" class="page-item"><a class="page-link" href="#">首页</a></li>
+                        <li @click="click_page(page.number)" :class="'page-item '+page.is_active" v-for="page in pages" :key="page.number">
+                            <a class="page-link" href="#">{{ page.number }}</a>
+                        </li>
+                        <li @click="click_page(-1)" class="page-item"><a class="page-link" href="#">尾页</a></li>
+                    </ul>
+                </nav>
             </div>
             <div style="font-size: 30px;">产品介绍</div>
             <div>“菌”探卫士采用自清洁SERS复合基底，结合纳米技术和光学等原理，能够将目标分子的拉曼信号放大106~1014倍，实现对水体中微量有害物质的高效捕获和灵敏检测。同时，通过微流控SERS芯片集成技术，实现样品的自动输送和处理，简化了检测流程，提高了检测效率和准确性。</div>
@@ -100,9 +85,65 @@
 
 <script>
 import '@/assets/iconfont/iconfont.css'
+import { ref } from "vue";
+import $ from 'jquery';
+import { useStore } from 'vuex'
 
 export default{
+    setup(){
+        const store=useStore();
+        let products=ref([]);
+        let total_products=0;
+        let pages=ref([]);
+        let current_page=1;
+        const click_page=page=>{
+            let max_pages=parseInt(Math.ceil(total_products/8));
+            if(page===-2)page=1;
+            else if(page===-1)page=max_pages;
+            if(page>=1&&page<=max_pages){
+                pull_page(page);
+            }
+        }
+        const update_pages=()=>{
+            let max_pages=parseInt(Math.ceil(total_products/8));
+            let new_pages=[];
+            for(let i=current_page-2;i<=current_page+2;++i){
+                if(i>=1&&i<=max_pages){
+                    new_pages.push({
+                        number:i,
+                        is_active:i===current_page?"active":"",
+                    });
+                }
+            }
+            pages.value=new_pages;
+        }
+        const pull_page=page=>{
+            current_page=page;
+            $.ajax({
+                url:"http://127.0.0.1:3000/api/shop/getlist/",
+                type:"get",
+                headers:{
+                    Authorization:"Bearer "+store.state.user.token,
+                },
+                data:{
+                    page:page,
+                },
+                success(resp){
+                    products.value=resp.products;
+                    total_products=resp.products_count;
+                    update_pages();
+                },
+            })
+        }
+        pull_page(current_page);
 
+        return{
+            products,
+            total_products,
+            pages,
+            click_page,
+        }
+    }
 }
 </script>
 

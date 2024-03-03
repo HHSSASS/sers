@@ -1,9 +1,9 @@
-package com.sers.backend.service.impl.admin;
+package com.sers.backend.service.impl.admin.permission;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sers.backend.mapper.UserMapper;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.UpdatePermissionService;
+import com.sers.backend.service.admin.permission.UpdatePermissionService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
