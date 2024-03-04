@@ -1,25 +1,17 @@
 <template>
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <div style="background-color: rgb(7, 83, 169);width: 250px;height: 120px;margin-top: 20px;text-align: center;">
-                <div style="padding-top: 35px;font-size: 30px; color: white;">通知公告</div>
-            </div>
-            <div v-if="notice!=undefined" style="margin-top: 20px;">
-                <div style="background-color:rgb(220, 220, 220);width: 100%;height:100px;text-align: center;">
-                    <div style="padding-top: 20px; font-size: 30px;">{{ notice.title }}</div>
-                    <div>发布时间：{{ notice.time.slice(0,10) }}</div>
-                </div>
+    <div class="container" style="width: 1100px;">
+        <div style="background-color: rgb(7, 83, 169);width: 250px;height: 120px;margin-top: 20px;text-align: center;">
+            <div style="padding-top: 35px;font-size: 30px; color: white;">通知公告</div>
+        </div>
+        <div v-if="notice!=undefined" style="margin-top: 20px;">
+            <div style="background-color:rgb(220, 220, 220);width: 100%;text-align: center;">
+                <div style="font-size: 30px;">{{ notice.title }}</div>
+                <div>发布时间：{{ notice.time.slice(0,10) }}</div>
             </div>
         </div>
-        <div class="col-2"></div>
-        <div class="row"  v-if="notice!=undefined" >
-            <div class="col-3"></div>
-            <div class="col-6">
-                <div style="padding-top: 50px; font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ notice.content }}</div>
-            </div>
-            <div class="col--3"></div>
-        </div>
+    </div>
+    <div  v-if="notice!=undefined" class="container" style="width: 900px;">
+        <div style="padding-top: 50px; font-size: 18px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ notice.content }}</div>
     </div>
 </template>
 

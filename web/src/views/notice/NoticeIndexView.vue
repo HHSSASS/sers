@@ -1,35 +1,31 @@
 <template>
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8">
-            <div style="background-color: rgb(7, 83, 169);width: 250px;height: 120px;margin-top: 20px;text-align: center;">
-                <div style="padding-top: 35px;font-size: 30px; color: white;">通知公告</div>
-            </div>
-            <div class="card border-dark mb-3" v-for="notice in notices" :key="notice.id" @click="open_notice(notice.id)" style="margin-top: 20px;cursor: pointer;">
-                <div class="row g-0">
-                    <div class="col-md-3">
-                        <img src="@/assets/images/photo2.png" class="img-fluid rounded-start" alt="" width="150px">
-                    </div>
-                    <div class="col-md-9">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ notice.title }}</h5>
-                            <p class="card-text">{{ notice.content.slice(0,50)+(notice.content.length<=50?"":"...") }}</p>
-                            <p class="card-text"><small class="text-muted">{{ notice.time.slice(0,10) }}</small></p>
-                        </div>
+    <div class="container" style="width: 1100px;">
+        <div style="background-color: rgb(7, 83, 169);width: 250px;height: 120px;margin-top: 20px;text-align: center;">
+            <div style="padding-top: 35px;font-size: 30px; color: white;">通知公告</div>
+        </div>
+        <div class="card border-dark mb-3" v-for="notice in notices" :key="notice.id" @click="open_notice(notice.id)" style="margin-top: 20px;cursor: pointer;">
+            <div class="row g-0">
+                <div class="col-md-3">
+                    <img src="@/assets/images/photo2.png" class="img-fluid rounded-start" alt="" width="180px">
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ notice.title }}</h5>
+                        <p class="card-text">{{ notice.content.slice(0,45)+(notice.content.length<=45?"":"...") }}</p>
+                        <p class="card-text"><small class="text-muted">{{ notice.time.slice(0,10) }}</small></p>
                     </div>
                 </div>
             </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination" style="float: right;">
-                    <li @click="click_page(-2)" class="page-item"><a class="page-link" href="#">首页</a></li>
-                    <li @click="click_page(page.number)" :class="'page-item '+page.is_active" v-for="page in pages" :key="page.number">
-                        <a class="page-link" href="#">{{ page.number }}</a>
-                    </li>
-                    <li @click="click_page(-1)" class="page-item"><a class="page-link" href="#">尾页</a></li>
-                </ul>
-            </nav>
         </div>
-        <div class="col-2"></div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" style="float: right;">
+                <li @click="click_page(-2)" class="page-item"><a class="page-link" href="#">首页</a></li>
+                <li @click="click_page(page.number)" :class="'page-item '+page.is_active" v-for="page in pages" :key="page.number">
+                    <a class="page-link" href="#">{{ page.number }}</a>
+                </li>
+                <li @click="click_page(-1)" class="page-item"><a class="page-link" href="#">尾页</a></li>
+            </ul>
+        </nav>
     </div>
 </template>
 
@@ -106,4 +102,7 @@ export default{
 </script>
 
 <style scoped>
+div.card:hover{
+    background-color:rgb(230, 230, 230);
+}
 </style>

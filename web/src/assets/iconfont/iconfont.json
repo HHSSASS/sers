@@ -1,0 +1,44 @@
+{
+  "id": "4444371",
+  "name": "sers",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7954334",
+      "name": "对勾_块",
+      "font_class": "duigou_kuai",
+      "unicode": "ed1d",
+      "unicode_decimal": 60701
+    },
+    {
+      "icon_id": "12886726",
+      "name": "微信支付",
+      "font_class": "weixinzhifu",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "27231735",
+      "name": "支付宝支付",
+      "font_class": "alipay",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "34453358",
+      "name": "人工客服",
+      "font_class": "rengongkefu",
+      "unicode": "e87c",
+      "unicode_decimal": 59516
+    },
+    {
+      "icon_id": "12339517",
+      "name": "横线",
+      "font_class": "hengxian1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

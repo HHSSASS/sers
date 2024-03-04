@@ -65,11 +65,11 @@ public class AddProductServiceImpl implements AddProductService {
             resp.put("message","定价不能为空");
             return resp;
         }
-        if(!price.matches("-?\\d+(\\.\\d+)?")){
-            resp.put("message","定价不正确");
+        Integer price_int=Integer.parseInt(price);
+        if(price_int<0||price_int>99999999){
+            resp.put("message","请输入正确定价");
             return resp;
         }
-        Integer price_int=Integer.parseInt(price);
         Product product=new Product(null,null,name,description,price_int);
         productMapper.insert(product);
         String path="D:\\temp\\Development project\\SpringBoot\\sers\\web\\src\\assets\\images\\"+product.getId().toString()+".png";

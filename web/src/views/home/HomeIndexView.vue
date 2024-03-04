@@ -25,13 +25,13 @@
             <div class="iconfont icon-hengxian1"></div>
             <div style="padding-top: 40px; padding-left: 25px;color: rgb(220, 220, 220);">
                 <div @click="open_notice(notice.id)" v-for="notice in notices" :key="notice.id" style="padding-bottom: 15px;cursor: pointer;">
-                    <div style="font-size: 20px;">{{ notice.title.slice(0,20)+(notice.title.length<=10?"":"...") }}</div>
+                    <div class="notice" style="font-size: 20px;">{{ notice.title.slice(0,20)+(notice.title.length<=20?"":"...") }}</div>
                     <div>{{ notice.time.slice(0,10) }}</div>
                 </div>
             </div>
         </div>
     </div>
-    <div style="padding-top: 50px;padding-bottom: 50px;">
+    <div style="padding-top: 50px;padding-bottom: 100px;">
         <div class="title">线上商城</div>
         <div class="iconfont icon-hengxian1"></div>
         <div style="display: flex; padding-left: 50px;padding-top:50px;">
@@ -49,7 +49,6 @@
 </template>
 
 <script>
-import '@/assets/iconfont/iconfont.css'
 import router from '@/router/index'
 import { ref } from 'vue'
 import $ from 'jquery'
@@ -110,10 +109,10 @@ export default{
 div.title{
     padding-left: 20px;
     font-size:30px ;
+    font-weight: bold;
     color: rgb(220, 220, 220);
 }
 div.iconfont.icon-hengxian1{
-    color: rgb(7, 83, 169) ;
     font-size: 15px;
 }
 div.iconfont.icon-rengongkefu{
@@ -146,5 +145,8 @@ div.link{
     float: right;
     margin-top: 50px;
     margin-right: 200px;
+}
+div.notice:hover{
+    text-decoration: underline;
 }
 </style>

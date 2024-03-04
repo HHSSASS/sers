@@ -1,52 +1,45 @@
 package com.sers.backend.service.impl.monitor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sers.backend.mapper.GpsMapper;
 import com.sers.backend.pojo.Gps;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.monitor.AddGpsService;
+import com.sers.backend.service.monitor.UpdateGpsService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
-public class AddGpsServiceImpl implements AddGpsService {
+public class UpdateGpsServiceImpl implements UpdateGpsService {
     @Autowired
     private GpsMapper gpsMapper;
 
     @Override
-    public JSONObject add(String number) {
+    public JSONObject update(Integer id, String name) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
         User user = loginUser.getUser();
         JSONObject resp=new JSONObject();
-        if(number==null||number.length()==0){
-            resp.put("message","序列号不能为空");
+        if(name==null||name.length()==0){
+            resp.put("message","名称不能为空");
             return resp;
         }
-        if(number.length()>50){
-            resp.put("message","序列号不正确");
+        if(name.length()>10){
+            resp.put("message","名称长度不能大于10");
             return resp;
         }
-        QueryWrapper<Gps> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("number",number);
-        Gps gps=gpsMapper.selectOne(queryWrapper);
+        Gps gps=gpsMapper.selectById(id);
         if(gps==null){
-            resp.put("message","序列号不存在");
+            resp.put("message","芯片不存在");
             return resp;
         }
-        if(gps.getUserId()!=null){
-            resp.put("message","该序列号已被激活");
-            return resp;
+        if(gps.getUserId()!= user.getId()){
+            resp.put("message","没有权限修改该芯片");
         }
-        Date now=new Date();
-        Gps new_gps=new Gps(gps.getId(),gps.getNumber(),gps.getNumber(),gps.getType(),gps.getAddTime(),user.getId(),now);
+        Gps new_gps=new Gps(gps.getId(),name, gps.getNumber(), gps.getType(), gps.getAddTime(), gps.getUserId(), gps.getActiveTime());
         gpsMapper.updateById(new_gps);
         resp.put("message","successful");
         return resp;

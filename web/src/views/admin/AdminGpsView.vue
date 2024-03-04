@@ -33,7 +33,8 @@
                         <th>序列号</th>
                         <th>型号</th>
                         <th>添加时间</th>
-                        <th>所属用户</th>
+                        <th>激活用户</th>
+                        <th>激活时间</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,10 +46,13 @@
                             <span>{{ gps.type }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.time.slice(0,10) }}</span>
+                            <span>{{ gps.addTime.slice(0,10) }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.userId }}</span>
+                            <span>{{ gps.userId==null?"未激活":gps.userId }}</span>
+                        </td>
+                        <td>
+                            <span>{{ gps.activeTime==null?"未激活":gps.activeTime.slice(0,10) }}</span>
                         </td>
                     </tr>
                 </tbody>

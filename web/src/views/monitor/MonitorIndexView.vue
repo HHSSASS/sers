@@ -1,11 +1,11 @@
 <template>
     <ContentField>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_gps" style="border-radius: 0px;">添加芯片</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_gps" style="border-radius: 0px;">激活芯片</button>
         <div class="modal fade" id="add_gps" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">添加芯片</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">激活芯片</h1>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -15,7 +15,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="error-message" style="float: right;color: red;">{{ new_gps.message }}</div>
-                        <button type="button" class="btn btn-primary" @click="add_gps">添加</button>
+                        <button type="button" class="btn btn-primary" @click="add_gps">激活</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
                     </div>
                 </div>
@@ -25,6 +25,7 @@
             <table class="table table-hover" style="text-align: center;">
                 <thead>
                     <tr>
+                        <th>名称</th>
                         <th>序列号</th>
                         <th>型号</th>
                         <th>激活时间</th>
@@ -34,13 +35,37 @@
                 <tbody>
                     <tr v-for="gps in gpss" :key="gps.id">
                         <td>
+                            <span class="name" data-bs-toggle="modal" :data-bs-target="'#update_gps'+gps.id">{{ gps.name }}</span>
+                            <div class="modal fade" :id="'update_gps'+gps.id" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" style="text-align: left;">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">修改名称</h1>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlTextarea1" class="form-label">芯片名称</label>
+                                            <textarea v-model="gps.name" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="请输入芯片名称"></textarea>
+                                            <div style="float: right;">{{ gps.name.length }}/10</div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="error-message" style="float: right;color: red;">{{ gps.message }}</div>
+                                        <button type="button" class="btn btn-primary" @click="update_gps(gps)">修改</button>
+                                        <button type="button" class="btn btn-secondary" @click="cancel(gps.id)">取消</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </td>
+                        <td>
                             <span>{{ gps.number }}</span>
                         </td>
                         <td>
                             <span>{{ gps.type }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.time.slice(0,10) }}</span>
+                            <span>{{ gps.activeTime.slice(0,10) }}</span>
                         </td>
                         <td>
                             <button @click="open_monitor(gps.id)" type="button" class="btn btn-secondary" style="border-radius: 0px;">实时监测</button>
@@ -106,6 +131,33 @@ export default{
                 },
             })
         }
+        const update_gps=(gps)=>{
+            gps.message="";
+            $.ajax({
+                url:"http://127.0.0.1:3000/api/monitor/update/",
+                type:"post",
+                headers:{
+                    Authorization:"Bearer "+store.state.user.token,
+                },
+                data:{
+                    id:gps.id,
+                    name:gps.name,
+                },
+                success(resp){
+                    if(resp.message==="successful"){
+                        Modal.getInstance('#update_gps'+gps.id).hide();
+                        pull_page(current_page);
+                    }
+                    else{
+                        gps.message=resp.message;
+                    }
+                },
+            })
+        }
+        const cancel=(id)=>{
+            Modal.getInstance('#update_gps'+id).hide();
+            pull_page(current_page);
+        }
         const open_monitor=id=>{
             router.push({
                 name:'monitor_content',
@@ -161,7 +213,9 @@ export default{
             pages,
             click_page,
             add_gps,
+            update_gps,
             open_monitor,
+            cancel,
         }
     },
     beforeMount () {
@@ -179,5 +233,11 @@ div.table-responsive>table>thead>tr>th {
 }
 div.table-responsive>table>tbody>tr>td {
     white-space: nowrap;
+}
+.name{
+    cursor: pointer;
+}
+.name:hover{
+    text-decoration: underline;
 }
 </style>

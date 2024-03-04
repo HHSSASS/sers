@@ -55,7 +55,7 @@ public class AddAdminGpsServiceImpl implements AddAdminGpsService {
             return resp;
         }
         Date now=new Date();
-        Gps gps=new Gps(null,number,type,now,0);
+        Gps gps=new Gps(null,number,number,type,now,null,null);
         gpsMapper.insert(gps);
         resp.put("message","successful");
         return resp;

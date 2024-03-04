@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import '@/assets/iconfont/iconfont.css'
 import { ref } from 'vue'
 import $ from 'jquery'
 import { useStore } from 'vuex'

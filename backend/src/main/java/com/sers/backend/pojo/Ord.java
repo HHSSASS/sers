@@ -12,15 +12,17 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Gps {
+public class Ord {
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private String name;
-    private String number;
-    private String type;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
-    private Date addTime;
     private Integer userId;
+    private Integer productId;
+    private String address;
+    private Integer number;
+    private String method;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
-    private Date activeTime;
+    private Date createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
+    private Date finishTime;
+    private String status;
 }

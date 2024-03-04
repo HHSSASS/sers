@@ -25,13 +25,18 @@
           <li class="nav-item">
             <router-link :class="route_name == 'monitor_index' ? 'nav-link active' : 'nav-link'" :to="{name:'monitor_index'}">监测平台</router-link>
           </li>
+          <li class="nav-item" v-if="$store.state.user.admin">
+            <router-link :class="route_name == 'admin_index' ? 'nav-link active' : 'nav-link'" :to="{name:'admin_index'}">管理系统</router-link>
+          </li>
         </ul>
-        <ul class="navbar-nav me-5" v-if="$store.state.user.is_login">
+        <ul class="navbar-nav" v-if="$store.state.user.is_login">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               {{$store.state.user.username}}
             </a>
             <ul class="dropdown-menu">
+              <li><router-link class="dropdown-item" :to="{name:'user_order_index'}">我的订单</router-link></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#" @click="logout">退出登录</a></li>
             </ul>
           </li>
@@ -42,11 +47,6 @@
           </li>
           <li class="nav-item">
             <router-link class='nav-link' :to="{name:'user_account_register'}">注册</router-link>
-          </li>
-        </ul>
-        <ul class="navbar-nav" v-if="$store.state.user.admin">
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{name:'admin_index'}">管理系统</router-link>
           </li>
         </ul>
       </div>

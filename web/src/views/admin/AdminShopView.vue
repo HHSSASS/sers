@@ -15,17 +15,17 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">产品名称</label>
-                            <textarea v-model="new_product.name" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="请输入名称"></textarea>
+                            <textarea v-model="new_product.name" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="请输入名称"></textarea>
                             <div style="float: right;">{{ new_product.name.length }}/100</div>
                         </div>
                         <div class="mb-3">
                             <label for="exampleFormControlTextarea1" class="form-label">产品简介</label>
-                            <textarea v-model="new_product.description" class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="请输入简介"></textarea>
+                            <textarea v-model="new_product.description" class="form-control" id="exampleFormControlTextarea1" rows="12" placeholder="请输入简介"></textarea>
                             <div style="float: right;">{{ new_product.description.length }}/1000</div>
                         </div>
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">产品定价</label>
-                            <textarea v-model="new_product.price" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="请输入定价"></textarea>
+                            <label for="exampleFormControlInput1" class="form-label">产品定价</label>
+                            <input v-model="new_product.price" type="number" class="form-control" id="exampleFormControlInput1" placeholder="请输入定价" min=0 max=99999999>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -53,10 +53,10 @@
                             <img :src="require('@/assets/images/'+product.id+'.png')" alt="" width="50px">
                         </td>
                         <td>
-                            <span>{{ product.name.slice(0,10)+(product.name.length<=10?"":"...") }}</span>
+                            <span>{{ product.name.slice(0,20)+(product.name.length<=20?"":"...") }}</span>
                         </td>
                         <td>
-                            <span>{{ product.description.slice(0,10)+(product.description.length<=10?"":"...") }}</span>
+                            <span>{{ product.description.slice(0,20)+(product.description.length<=20?"":"...") }}</span>
                         </td>
                         <td>
                             <span>{{ product.price }}</span>
@@ -77,7 +77,7 @@
                                                 </div>
                                                 <div class="mb-3">
                                                     <label for="exampleFormControlTextarea1" class="form-label">产品名称</label>
-                                                    <textarea v-model="product.name" class="form-control" id="exampleFormControlTextarea1" rows="2" placeholder="请输入名称"></textarea>
+                                                    <textarea v-model="product.name" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="请输入名称"></textarea>
                                                     <div style="float: right;">{{ product.name.length }}/100</div>
                                                 </div>
                                                 <div class="mb-3">
@@ -86,8 +86,8 @@
                                                     <div style="float: right;">{{ product.description.length }}/1000</div>
                                                 </div>
                                                 <div class="mb-3">
-                                                    <label for="exampleFormControlTextarea1" class="form-label">产品定价</label>
-                                                    <textarea v-model="product.price" class="form-control" id="exampleFormControlTextarea1" rows="1" placeholder="请输入定价"></textarea>
+                                                    <label for="exampleFormControlInput1" class="form-label">产品定价</label>
+                                                    <input v-model="product.price" type="number" class="form-control" id="exampleFormControlInput1" placeholder="请输入定价" min=0 max=99999999>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">

@@ -8,6 +8,7 @@ import MonitorIndexView from '../views/monitor/MonitorIndexView'
 import MonitorContentView from '../views/monitor/MonitorContentView'
 import UserAccountLoginView from '../views/user/account/UserAccountLoginView'
 import UserAccountRegisterView from '../views/user/account/UserAccountRegisterView'
+import UserOrderView from '../views/user/order/UserOrderView'
 import NotFound from "../views/error/NotFound"
 import AdminIndexView from "../views/admin/AdminIndexView"
 import AdminPermissionView from "../views/admin/AdminPermissionView"
@@ -137,6 +138,14 @@ const routes = [
     },
   },
   {
+    path: '/user/order/',
+    name: 'user_order_index',
+    component:UserOrderView,
+    meta:{
+      requestAuth:true,
+    },
+  },
+  {
     path: '/user/account/login/',
     name: 'user_account_login',
     component:UserAccountLoginView,
@@ -200,6 +209,11 @@ router.beforeEach((to,from,next)=>{
   }else{
     next();
   }
+})
+
+router.afterEach((to, from, next) => {
+  to,from,next;
+  window.scrollTo(0, 0)
 })
 
 export default router

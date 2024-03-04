@@ -40,7 +40,7 @@
                 <tbody>
                     <tr v-for="notice in notices" :key="notice.id">
                         <td>
-                            <span>{{ notice.title }}</span>
+                            <span>{{ notice.title.slice(0,20)+(notice.title.length<=20?"":"...") }}</span>
                         </td>
                         <td>
                             <span>{{ notice.time.slice(0,10) }}</span>
