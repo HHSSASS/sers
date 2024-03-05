@@ -14,7 +14,7 @@ public class AddOrderController {
     @Autowired
     private AddOrderService addOrderService;
 
-    @PostMapping("/api/shop/add/")
+    @PostMapping("/api/order/add/")
     public JSONObject add(@RequestParam Map<String,String> data){
         Integer product_id=Integer.parseInt(data.get("id"));
         String address=data.get("address");

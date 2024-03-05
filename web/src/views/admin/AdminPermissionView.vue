@@ -1,6 +1,5 @@
 <template>
-    <AdminNavbar></AdminNavbar>
-    <ContentField>
+    <AdminNavbar>
         <div class="table-responsive">
             <table class="table table-hover" style="text-align: center;">
                 <thead>
@@ -34,12 +33,11 @@
                 <li @click="click_page(-1)" class="page-item"><a class="page-link" href="#">尾页</a></li>
             </ul>
         </nav>
-    </ContentField>
+    </AdminNavbar>
 </template>
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
-import ContentField from '@/components/ContentField.vue'
 import { useStore } from 'vuex';
 import $ from 'jquery'
 import { ref } from 'vue'
@@ -48,7 +46,6 @@ import router from '@/router';
 export default{
     components:{
         AdminNavbar,
-        ContentField,
     },
     setup(){
         const store=useStore();
@@ -73,7 +70,7 @@ export default{
         }
         const pull_users=()=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/getlistuser/",
+                url:"http://127.0.0.1:3000/api/admin/user/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,

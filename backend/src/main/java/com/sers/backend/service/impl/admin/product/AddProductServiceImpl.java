@@ -1,10 +1,10 @@
-package com.sers.backend.service.impl.admin.shop;
+package com.sers.backend.service.impl.admin.product;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sers.backend.mapper.ProductMapper;
 import com.sers.backend.pojo.Product;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.shop.AddProductService;
+import com.sers.backend.service.admin.product.AddProductService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,16 +61,18 @@ public class AddProductServiceImpl implements AddProductService {
             resp.put("message","简介长度不能大于1000");
             return resp;
         }
-        if(price==null||price.length()==0){
-            resp.put("message","定价不能为空");
-            return resp;
-        }
-        Integer price_int=Integer.parseInt(price);
-        if(price_int<0||price_int>99999999){
+        Double price_num;
+        try{
+            price_num=Double.parseDouble(price);
+        }catch (NumberFormatException e){
             resp.put("message","请输入正确定价");
             return resp;
         }
-        Product product=new Product(null,null,name,description,price_int);
+        if(price_num<=0||price_num>=10000){
+            resp.put("message","请输入正确定价");
+            return resp;
+        }
+        Product product=new Product(null,null,name,description,price_num);
         productMapper.insert(product);
         String path="D:\\temp\\Development project\\SpringBoot\\sers\\web\\src\\assets\\images\\"+product.getId().toString()+".png";
         File toFile=new File(path);
@@ -82,7 +84,7 @@ public class AddProductServiceImpl implements AddProductService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Product new_product=new Product(product.getId(),path,name,description,price_int);
+        Product new_product=new Product(product.getId(),path,name,description,price_num);
         productMapper.updateById(new_product);
         resp.put("message","successful");
         return resp;

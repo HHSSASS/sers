@@ -19,10 +19,14 @@ public class Ord {
     private Integer productId;
     private String address;
     private Integer number;
-    private String method;
+    private Integer method;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
+    private Date sendTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
     private Date finishTime;
-    private String status;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
+    private Date refundTime;
+    private Integer status;
 }

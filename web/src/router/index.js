@@ -13,7 +13,7 @@ import NotFound from "../views/error/NotFound"
 import AdminIndexView from "../views/admin/AdminIndexView"
 import AdminPermissionView from "../views/admin/AdminPermissionView"
 import AdminNoticeView from "../views/admin/AdminNoticeView"
-import AdminShopView from "../views/admin/AdminShopView"
+import AdminProductView from "../views/admin/AdminProductView"
 import AdminGpsView from "../views/admin/AdminGpsView"
 import AdminOrderView from "../views/admin/AdminOrderView.vue"
 import AdminServiceView from "../views/admin/AdminServiceView"
@@ -108,7 +108,7 @@ const routes = [
   {
     path:'/admin/shop/',
     name:'admin_shop',
-    component:AdminShopView,
+    component:AdminProductView,
     meta:{
       requestAuth:true,
     },

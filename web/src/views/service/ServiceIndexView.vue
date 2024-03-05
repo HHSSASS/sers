@@ -47,7 +47,7 @@ export default{
         let error=ref(false);
         const pull_dialogs=()=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/service/getlist/",
+                url:"http://127.0.0.1:3000/api/dialog/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -68,7 +68,7 @@ export default{
         const submit=()=>{
             message.value="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/service/add/",
+                url:"http://127.0.0.1:3000/api/dialog/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,

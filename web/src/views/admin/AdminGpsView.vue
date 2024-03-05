@@ -1,6 +1,5 @@
 <template>
-    <AdminNavbar></AdminNavbar>
-    <ContentField>
+    <AdminNavbar>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_gps" style="border-radius: 0px;">添加芯片</button>
         <div class="modal fade" id="add_gps" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -38,21 +37,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="gps in gpss" :key="gps.id">
+                    <tr v-for="item in items" :key="item.gps.id">
                         <td>
-                            <span>{{ gps.number }}</span>
+                            <span>{{ item.gps.number }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.type }}</span>
+                            <span>{{ item.gps.type }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.addTime.slice(0,10) }}</span>
+                            <span>{{ item.gps.addTime }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.userId==null?"未激活":gps.userId }}</span>
+                            <span>{{ item.username==null?"未激活":item.username }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.activeTime==null?"未激活":gps.activeTime.slice(0,10) }}</span>
+                            <span>{{ item.gps.activeTime==null?"未激活":item.gps.activeTime }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -67,12 +66,11 @@
                 <li @click="click_page(-1)" class="page-item"><a class="page-link" href="#">尾页</a></li>
             </ul>
         </nav>
-    </ContentField>
+    </AdminNavbar>
 </template>
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
-import ContentField from '@/components/ContentField.vue'
 import { Modal } from 'bootstrap/dist/js/bootstrap'
 import $ from 'jquery'
 import { ref,reactive } from 'vue'
@@ -81,12 +79,11 @@ import { useStore } from 'vuex'
 export default{
     components:{
         AdminNavbar,
-        ContentField,
     },
     setup(){
         const store=useStore();
-        let gpss=ref([])
-        let total_gpss=0;
+        let items=ref([])
+        let total_items=0;
         let pages=ref([]);
         let current_page=1;
         const new_gps=reactive({
@@ -120,7 +117,7 @@ export default{
             })
         }
         const click_page=page=>{
-            let max_pages=parseInt(Math.ceil(total_gpss/20));
+            let max_pages=parseInt(Math.ceil(total_items/20));
             if(page===-2)page=1;
             else if(page===-1)page=max_pages;
             if(page>=1&&page<=max_pages){
@@ -128,7 +125,7 @@ export default{
             }
         }
         const update_pages=()=>{
-            let max_pages=parseInt(Math.ceil(total_gpss/20));
+            let max_pages=parseInt(Math.ceil(total_items/20));
             let new_pages=[];
             for(let i=current_page-2;i<=current_page+2;++i){
                 if(i>=1&&i<=max_pages){
@@ -153,8 +150,8 @@ export default{
                 },
                 success(resp){
                     console.log(resp);
-                    gpss.value=resp.gpss;
-                    total_gpss=resp.gpss_count;
+                    items.value=resp.items;
+                    total_items=resp.items_count;
                     update_pages();
                 },
             })
@@ -162,8 +159,8 @@ export default{
         pull_page(current_page);
         return{
             new_gps,
-            gpss,
-            total_gpss,
+            items,
+            total_items,
             pages,
             click_page,
             add_gps,

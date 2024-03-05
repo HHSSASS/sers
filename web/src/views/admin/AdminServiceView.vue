@@ -1,57 +1,58 @@
 <template>
     <ErrorBoard v-if="error"></ErrorBoard>
-    <AdminNavbar></AdminNavbar>
-    <div class="container">
-        <div class="mess">
-            <div class="mess_user_list">
-                <div class="user">用户列表</div>
-                <div class="user_list">
-                    <div v-for="user in users" :key="user.id" @click="pull_dialogs(user)" class="user_list_item">
-                        <div style="padding-left: 10px;">{{ user.username }}</div>
+    <AdminServiceNavbar>
+        <div class="container">
+            <div class="mess">
+                <div class="mess_user_list">
+                    <div class="user">用户列表</div>
+                    <div class="user_list">
+                        <div v-for="user in users" :key="user.id" @click="pull_dialogs(user)" class="user_list_item" :style="user==current_user?'background-color: rgb(230, 230, 230)':'background-color: white;'">
+                            <div style="padding-left: 10px;">{{ user.username }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div v-if="current_user!=undefined" class="mess_dialog">
-                <div class="dlog_header">
-                    <div style="margin-left: 20px;font-size: 25px;">{{ current_user.username }}</div>
-                </div>
-                <div class="dlog_content" id="content">
-                    <div class="content" v-for="(dialog,index) in dialogs" :key="dialog.id">
-                        <div v-if="index===0||(new Date(dialogs[index].time)-new Date(dialogs[index-1].time))/(1000 * 60)>5" class="time">{{ dialog.time }}</div>
-                        <div v-if="dialog.sendUserId===0" style="align-self: flex-end;">客服</div>
-                        <div v-else >{{ $store.state.user.username }}</div>
-                        <div v-if="dialog.sendUserId===0" class="content_me">{{ dialog.content }}</div>
-                        <div v-else class="content_other">{{ dialog.content }}</div>                    
+                <div v-if="current_user!=undefined" class="mess_dialog">
+                    <div class="dlog_header">
+                        <div style="margin-left: 20px;font-size: 25px;">{{ current_user.username }}</div>
+                    </div>
+                    <div class="dlog_content" id="content">
+                        <div class="content" v-for="(dialog,index) in dialogs" :key="dialog.id">
+                            <div v-if="index===0||(new Date(dialogs[index].time)-new Date(dialogs[index-1].time))/(1000 * 60)>5" class="time">{{ dialog.time }}</div>
+                            <div v-if="dialog.sendUserId===0" style="align-self: flex-end;">客服</div>
+                            <div v-else >{{ $store.state.user.username }}</div>
+                            <div v-if="dialog.sendUserId===0" class="content_me">{{ dialog.content }}</div>
+                            <div v-else class="content_other">{{ dialog.content }}</div>                    
+                        </div>
+                    </div>
+                    <div class="dlog_footer">
+                        <textarea v-model="content" class="form-control" rows="5" style="resize: none;border-bottom: 1px solid rgb(204, 232, 255);"></textarea>
+                        <div style="display: flex;float: right;">
+                            <div style="color:red;padding-top: 15px;">{{ message }}</div>
+                            <div style="padding-top: 15px;">{{ content.length }}/500</div>
+                            <button @click="submit" class="btn btn-lg">发送</button>
+                        </div>
                     </div>
                 </div>
-                <div class="dlog_footer">
-                    <textarea v-model="content" class="form-control" rows="5" style="resize: none;border-bottom: 1px solid rgb(204, 232, 255);"></textarea>
-                    <div style="display: flex;float: right;">
-                        <div style="color:red;padding-top: 15px;">{{ message }}</div>
-                        <div style="padding-top: 15px;">{{ content.length }}/500</div>
-                        <button @click="submit" class="btn btn-lg">发送</button>
-                    </div>
+                <div v-else class="mess_dialog_false">
+                    <div>请选择用户对象</div>
                 </div>
-            </div>
-            <div v-else class="mess_dialog_false">
-                <div>请选择用户对象</div>
             </div>
         </div>
-    </div>
+    </AdminServiceNavbar>
 </template>
 
 <script>
+import ErrorBoard from '@/components/ErrorBoard.vue'
+import AdminServiceNavbar from '@/components/AdminServiceNavbar.vue'
 import { ref } from 'vue'
 import $ from 'jquery'
 import { useStore } from 'vuex'
 import { onMounted,onUnmounted } from 'vue'
 import router from '@/router'
-import ErrorBoard from '@/components/ErrorBoard.vue'
-import AdminNavbar from '@/components/AdminNavbar.vue'
 
 export default{
     components:{
-        AdminNavbar,
+        AdminServiceNavbar,
         ErrorBoard,
     },
     setup(){
@@ -67,7 +68,7 @@ export default{
         let error=ref(false);
         const pull_users=()=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/getlistuser/",
+                url:"http://127.0.0.1:3000/api/admin/user/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -84,7 +85,7 @@ export default{
         const pull_dialogs=user=>{
             current_user.value=user;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/getlistdialog/",
+                url:"http://127.0.0.1:3000/api/admin/dialog/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -106,7 +107,7 @@ export default{
         const submit=()=>{
             message.value="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/adddialog/",
+                url:"http://127.0.0.1:3000/api/admin/dialog/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -222,7 +223,6 @@ export default{
 }
 .user_list_item{
     height: 60px;
-    background-color: white;
     border-right: 1px solid rgb(204, 232, 255);
     border-bottom: 1px solid rgb(204, 232, 255);
     display: flex;

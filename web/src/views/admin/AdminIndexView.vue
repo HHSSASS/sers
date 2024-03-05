@@ -1,18 +1,15 @@
 <template>
-    <AdminNavbar></AdminNavbar>
-    <ContentField>
+    <AdminNavbar>
         <div style="text-align: center;">尊敬的管理员您好，欢迎进入管理系统！</div>
-    </ContentField>
+    </AdminNavbar>
 </template>
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
-import ContentField from '@/components/ContentField.vue'
 
 export default{
     components:{
         AdminNavbar,
-        ContentField,
     },
     setup(){
         

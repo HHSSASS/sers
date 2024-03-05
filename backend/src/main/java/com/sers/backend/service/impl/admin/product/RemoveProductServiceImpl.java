@@ -1,10 +1,10 @@
-package com.sers.backend.service.impl.admin.shop;
+package com.sers.backend.service.impl.admin.product;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sers.backend.mapper.ProductMapper;
 import com.sers.backend.pojo.Product;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.shop.RemoveProductService;
+import com.sers.backend.service.admin.product.RemoveProductService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

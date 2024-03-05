@@ -34,24 +34,24 @@
                                 <div style="background-color: white;margin-left: 20px;margin-right: 20px;">
                                     <div class="item">用户名：{{ $store.state.user.username }}</div>
                                     <div class="item">
+                                        <div>购买数量：</div>
+                                        <input v-model="product.number" type="number" class="form-control form-control-sm" min=1 max=99 style="width: 10%;">
+                                    </div>
+                                    <div class="item">
                                         <div>收货地址：</div>
                                         <input v-model="product.address" type="text" class="form-control form-control-sm" placeholder="请输入收货地址" style="width: 80%;">
                                     </div>
                                     <div class="item">
-                                        <div>购买数量：</div>
-                                        <input v-model="product.number" type="number" class="form-control form-control-sm" min=1 max=999 style="width: 10%;">
-                                    </div>
-                                    <div class="item">
                                         <div >支付方式：</div>
                                         <div class="form-check">
-                                            <input v-model="product.wechat" class="form-check-input" type="radio" name="flexRadioDefault" :id="'flexRadioDefault1'+product.id">
-                                            <label class="form-check-label" :for="'flexRadioDefault1'+product.id">
+                                            <input v-model="product.method" class="form-check-input" type="radio" name="flexRadioDefault" :id="'Radio1'+product.id" value="0">
+                                            <label class="form-check-label" :for="'Radio1'+product.id">
                                                 <div class="iconfont icon-weixinzhifu" style="font-size: 20px;"></div>
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input v-model="product.alipay" class="form-check-input" type="radio" name="flexRadioDefault" :id="'flexRadioDefault2'+product.id"  checked>
-                                            <label class="form-check-label" :for="'flexRadioDefault2'+product.id">
+                                            <input v-model="product.method" class="form-check-input" type="radio" name="flexRadioDefault" :id="'Radio2'+product.id" value="1">
+                                            <label class="form-check-label" :for="'Radio2'+product.id">
                                                 <div class="iconfont icon-alipay" style="font-size: 20px;"></div>
                                             </label>
                                         </div>
@@ -59,7 +59,7 @@
                                     <div style="display: flex; justify-content: flex-end;align-items: flex-end;">
                                         <div style="color: red;margin-right: 10px;">{{ product.message }}</div>
                                         <div>支付金额：</div>
-                                        <div style="font-size: 25px; margin-right: 10px;color: rgb(13,110,253);">￥{{ product.number>0?product.price*product.number:"?" }}</div> 
+                                        <div style="font-size: 25px; margin-right: 10px;color: rgb(13,110,253);">￥{{ product.number>0&&product.number<100&&(product.number|0)===product.number?product.price*product.number:"?" }}</div> 
                                         <button @click="add_order(product)" type="button" class="btn btn-primary" style="border-radius: 0px;">立即购买</button>
                                     </div>
                                 </div>
@@ -196,11 +196,8 @@ export default{
         let current_page=1;
         const add_order=(product)=>{
             product.message="";
-            let method=0;
-            if(product.wechat) method=1;
-            else if(product.alipay) method=2;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/shop/add/",
+                url:"http://127.0.0.1:3000/api/order/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -209,14 +206,14 @@ export default{
                     id:product.id,
                     address:product.address,
                     number:product.number,
-                    method:method,
+                    method:product.method,
                 },
                 success(resp){
                     if(resp.message=="successful"){
                         Offcanvas.getInstance('#product'+product.id).hide();
                         product.address="";
                         product.number=null;
-                        product.wechat=product.alipay=false;
+                        product.method=null;
                     }
                     else{
                         product.message=resp.message;
@@ -248,7 +245,7 @@ export default{
         const pull_page=page=>{
             current_page=page;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/shop/getlist/",
+                url:"http://127.0.0.1:3000/api/product/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,

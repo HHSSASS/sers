@@ -10,13 +10,7 @@
             <div @click="to_service" class="function" :style="route_name=='admin_service'?'background-color:rgb(100,100,100);':'background-color:rgb(78,80,86);'">客服系统</div>
         </div>
         <div class="col-11">
-            <div class="container" style="margin-top: 20px;">
-                <div class="card" style="border-radius: 0px;">
-                    <div class="card-body">
-                        <slot></slot>
-                    </div>
-                </div>
-            </div>
+            <slot></slot>
         </div>
     </div>
 </template>

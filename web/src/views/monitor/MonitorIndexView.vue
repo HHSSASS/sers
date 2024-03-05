@@ -65,7 +65,7 @@
                             <span>{{ gps.type }}</span>
                         </td>
                         <td>
-                            <span>{{ gps.activeTime.slice(0,10) }}</span>
+                            <span>{{ gps.activeTime }}</span>
                         </td>
                         <td>
                             <button @click="open_monitor(gps.id)" type="button" class="btn btn-secondary" style="border-radius: 0px;">实时监测</button>
@@ -111,7 +111,7 @@ export default{
         const add_gps=()=>{
             new_gps.message="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/monitor/add/",
+                url:"http://127.0.0.1:3000/api/gps/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -134,7 +134,7 @@ export default{
         const update_gps=(gps)=>{
             gps.message="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/monitor/update/",
+                url:"http://127.0.0.1:3000/api/gps/update/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -190,7 +190,7 @@ export default{
         const pull_page=page=>{
             current_page=page;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/monitor/getlist/",
+                url:"http://127.0.0.1:3000/api/gps/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,

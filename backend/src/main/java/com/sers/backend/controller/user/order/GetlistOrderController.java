@@ -1,7 +1,7 @@
-package com.sers.backend.controller.monitor;
+package com.sers.backend.controller.user.order;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sers.backend.service.monitor.GetlistGpsService;
+import com.sers.backend.service.user.order.GetlistOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class GetlistGpsController {
+public class GetlistOrderController {
     @Autowired
-    private GetlistGpsService getlistGpsService;
+    private GetlistOrderService getlistOrderService;
 
-    @GetMapping("/api/gps/getlist/")
+    @GetMapping("/api/order/getlist/")
     public JSONObject getlist(@RequestParam Map<String,String> data){
         Integer page=Integer.parseInt(data.get("page"));
-        return getlistGpsService.getlist(page);
+        Integer condition=Integer.parseInt(data.get("condition"));
+        return getlistOrderService.getlist(page,condition);
     }
 }

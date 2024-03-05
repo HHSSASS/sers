@@ -11,7 +11,7 @@ public class GetlistUserController {
     @Autowired
     private GetlistUserService getlistUserService;
 
-    @GetMapping("/api/admin/getlistuser/")
+    @GetMapping("/api/admin/user/getlist/")
     public JSONObject getlist(){
         return getlistUserService.getlist();
     }

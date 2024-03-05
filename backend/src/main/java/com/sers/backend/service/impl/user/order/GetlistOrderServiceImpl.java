@@ -1,4 +1,4 @@
-package com.sers.backend.service.impl.admin.order;
+package com.sers.backend.service.impl.user.order;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -10,7 +10,7 @@ import com.sers.backend.mapper.UserMapper;
 import com.sers.backend.pojo.Ord;
 import com.sers.backend.pojo.Product;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.order.GetlistAdminOrderService;
+import com.sers.backend.service.user.order.GetlistOrderService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,7 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
-public class GetlistAdminOrderServiceImpl implements GetlistAdminOrderService {
+public class GetlistOrderServiceImpl implements GetlistOrderService {
     @Autowired
     private OrdMapper ordMapper;
     @Autowired
@@ -36,17 +36,13 @@ public class GetlistAdminOrderServiceImpl implements GetlistAdminOrderService {
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
         User user = loginUser.getUser();
         JSONObject resp=new JSONObject();
-        if(!user.getAdmin()){
-            resp.put("message","无管理员权限");
-            return resp;
-        }
         if(condition<0||condition>4){
             resp.put("message","请选择正确筛选条件");
             return resp;
         }
         IPage<Ord> ordIPage=new Page<>(page,20);
         QueryWrapper<Ord> queryWrapper=new QueryWrapper<>();
-        queryWrapper.orderByDesc("id");
+        queryWrapper.orderByDesc("id").eq("user_id",user.getId());
         if(condition>0){
             queryWrapper.eq("status",condition);
         }

@@ -1,4 +1,4 @@
-package com.sers.backend.service.admin.shop;
+package com.sers.backend.service.admin.product;
 
 import com.alibaba.fastjson.JSONObject;
 

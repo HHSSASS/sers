@@ -15,10 +15,7 @@ export default{
 }
 </script>
 
-<style lang="less">
-body{
-  font-family: font;
-}
+<style>
 .row {
     --bs-gutter-x: 0;
 }

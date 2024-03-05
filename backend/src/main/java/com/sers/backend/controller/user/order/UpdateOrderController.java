@@ -1,7 +1,7 @@
-package com.sers.backend.controller.monitor;
+package com.sers.backend.controller.user.order;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sers.backend.service.monitor.UpdateGpsService;
+import com.sers.backend.service.user.order.UpdateOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class UpdateGpsController {
+public class UpdateOrderController {
     @Autowired
-    private UpdateGpsService updateGpsService;
+    private UpdateOrderService updateOrderService;
 
-    @PostMapping("/api/gps/update/")
+    @PostMapping("/api/order/update/")
     public JSONObject update(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
-        String name=data.get("name");
-        return updateGpsService.update(id,name);
+        Integer status=Integer.parseInt(data.get("status"));
+        return updateOrderService.update(id,status);
     }
 }

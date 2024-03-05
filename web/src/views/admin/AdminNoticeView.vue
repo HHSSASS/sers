@@ -1,6 +1,5 @@
 <template>
-    <AdminNavbar></AdminNavbar>
-    <ContentField>
+    <AdminNavbar>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_notice" style="border-radius: 0px;">发布通知</button>
         <div class="modal fade" id="add_notice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -91,12 +90,11 @@
                 <li @click="click_page(-1)" class="page-item"><a class="page-link" href="#">尾页</a></li>
             </ul>
         </nav>
-    </ContentField>
+    </AdminNavbar>
 </template>
 
 <script>
 import AdminNavbar from '@/components/AdminNavbar.vue'
-import ContentField from '@/components/ContentField.vue'
 import { Modal } from 'bootstrap/dist/js/bootstrap'
 import $ from 'jquery'
 import { ref,reactive } from 'vue'
@@ -106,7 +104,6 @@ import router from '@/router'
 export default{
     components:{
         AdminNavbar,
-        ContentField,
     },
     setup(){
         const store=useStore();
@@ -180,7 +177,7 @@ export default{
                 },
                 success(resp){
                     if(resp.message==="successful"){
-                        pull_page(1);
+                        pull_page(current_page);
                     }
                 },
             })

@@ -14,7 +14,7 @@ public class AddGpsController {
     @Autowired
     private AddGpsService addGpsService;
 
-    @PostMapping("/api/monitor/add/")
+    @PostMapping("/api/gps/add/")
     public JSONObject add(@RequestParam Map<String,String> data){
         String number=data.get("number");
         return addGpsService.add(number);

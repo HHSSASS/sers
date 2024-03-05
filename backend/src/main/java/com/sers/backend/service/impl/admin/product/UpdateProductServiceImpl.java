@@ -1,10 +1,10 @@
-package com.sers.backend.service.impl.admin.shop;
+package com.sers.backend.service.impl.admin.product;
 
 import com.alibaba.fastjson.JSONObject;
 import com.sers.backend.mapper.ProductMapper;
 import com.sers.backend.pojo.Product;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.shop.UpdateProductService;
+import com.sers.backend.service.admin.product.UpdateProductService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,15 +61,17 @@ public class UpdateProductServiceImpl implements UpdateProductService {
             resp.put("message","简介长度不能大于1000");
             return resp;
         }
-        if(price==null||price.length()==0){
-            resp.put("message","定价不能为空");
+        Double price_num;
+        try{
+            price_num=Double.parseDouble(price);
+        }catch (NumberFormatException e){
+            resp.put("message","请输入正确定价");
             return resp;
         }
-        if(!price.matches("-?\\d+(\\.\\d+)?")){
-            resp.put("message","定价不正确");
+        if(price_num<=0||price_num>=10000){
+            resp.put("message","请输入正确定价");
             return resp;
         }
-        Integer price_int=Integer.parseInt(price);
         Product product=productMapper.selectById(id);
         if(product==null){
             resp.put("message","产品不存在或已被删除");
@@ -86,7 +88,7 @@ public class UpdateProductServiceImpl implements UpdateProductService {
                 e.printStackTrace();
             }
         }
-        Product new_product=new Product(product.getId(),product.getPhoto(),name,description,price_int);
+        Product new_product=new Product(product.getId(),product.getPhoto(),name,description,price_num);
         productMapper.updateById(new_product);
         resp.put("message","successful");
         return resp;

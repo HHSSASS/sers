@@ -42,26 +42,23 @@ public class AddOrderServiceImpl implements AddOrderService {
             resp.put("message","收货地址长度不能大于100");
             return resp;
         }
-        if(number==null||number.length()==0){
-            resp.put("message","购买数量不能为空");
-            return resp;
-        }
-        Integer number_int=Integer.parseInt(number);
-        if(number_int<=0||number_int>999){
+        Integer number_num;
+        try {
+            number_num=Integer.parseInt(number);
+        }catch (NumberFormatException e){
             resp.put("message","请输入正确购买数量");
             return resp;
         }
-        String method_str;
-        if(method==1) {
-            method_str = "微信支付";
-        }else if(method==2){
-            method_str="支付宝支付";
-        }else{
+        if(number_num<=0||number_num>=100){
+            resp.put("message","请输入正确购买数量");
+            return resp;
+        }
+        if(method!=0&&method!=1){
             resp.put("message","请选择支付方式");
             return resp;
         }
         Date now=new Date();
-        Ord ord=new Ord(null,user.getId(),product_id,address,number_int,method_str,now,null,"未发货");
+        Ord ord=new Ord(null,user.getId(),product_id,address,number_num,method,now,null,null,null,1);
         ordMapper.insert(ord);
         resp.put("message","successful");
         return resp;

@@ -14,7 +14,7 @@ public class GetlistAdminDialogController {
     @Autowired
     private GetlistAdminDialogService getlistServiceDialogService;
 
-    @GetMapping("/api/admin/getlistdialog/")
+    @GetMapping("/api/admin/dialog/getlist/")
     public JSONObject getlist(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         return getlistServiceDialogService.getlist(id);

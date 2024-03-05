@@ -17,7 +17,7 @@ public class GetlistAdminOrderController {
     @GetMapping("/api/admin/order/getlist/")
     public JSONObject getlist(@RequestParam Map<String,String> data){
         Integer page=Integer.parseInt(data.get("page"));
-        String condition=data.get("condition");
+        Integer condition=Integer.parseInt(data.get("condition"));
         return getlistAdminOrderService.getlist(page,condition);
     }
 }

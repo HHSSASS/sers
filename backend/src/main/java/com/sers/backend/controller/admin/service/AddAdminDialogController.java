@@ -14,7 +14,7 @@ public class AddAdminDialogController {
     @Autowired
     private AddAdminDialogService addServiceDialogService;
 
-    @PostMapping("/api/admin/adddialog/")
+    @PostMapping("/api/admin/dialog/add/")
     public JSONObject add(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         String content=data.get("content");

@@ -14,7 +14,7 @@ public class GetlistProductController {
     @Autowired
     private GetlistProductService getlistProductService;
 
-    @GetMapping("/api/shop/getlist/")
+    @GetMapping("/api/product/getlist/")
     public JSONObject getlist(@RequestParam Map<String,String> data){
         Integer page=Integer.parseInt(data.get("page"));
         return getlistProductService.getlist(page);
