@@ -20,4 +20,5 @@ public class Dialog {
     private String content;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
     private Date time;
+    private Boolean isRead;
 }

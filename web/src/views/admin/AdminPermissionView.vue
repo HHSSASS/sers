@@ -52,7 +52,7 @@ export default{
         let users=ref([]);
         const update_admin=(id)=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/permission/update/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/permission/update/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -70,14 +70,14 @@ export default{
         }
         const pull_users=()=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/user/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/user/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
                 },
                 success(resp){
                     if(resp.message==="successful"){
-                        users.value=resp.data;
+                        users.value=resp.users;
                     }
                 },
             })

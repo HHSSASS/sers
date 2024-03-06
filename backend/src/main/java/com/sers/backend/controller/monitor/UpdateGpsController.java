@@ -14,7 +14,7 @@ public class UpdateGpsController {
     @Autowired
     private UpdateGpsService updateGpsService;
 
-    @PostMapping("/api/gps/update/")
+    @PostMapping("/api2/gps/update/")
     public JSONObject update(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         String name=data.get("name");

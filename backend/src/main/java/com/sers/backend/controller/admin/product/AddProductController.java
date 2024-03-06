@@ -13,7 +13,7 @@ public class AddProductController {
     @Autowired
     private AddProductService addProductService;
 
-    @PostMapping("/api/admin/product/add/")
+    @PostMapping("/api2/admin/product/add/")
     public JSONObject add(@RequestParam("photo") MultipartFile photo,
                           @RequestParam("name") String name,
                           @RequestParam("description") String description,

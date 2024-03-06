@@ -30,7 +30,7 @@
                             <span>{{ item.order.productId }}</span>
                         </td>
                         <td>
-                            <span>{{ item.name.slice(0,10)+(item.name.length<=10?"":"...") }}</span>
+                            <span>{{ item.product_name==null?"产品已下架":(item.product_name.slice(0,10)+(item.product_name.length<=10?"":"...")) }}</span>
                         </td>
                         <td>
                             <span>{{ item.order.number }}</span>
@@ -55,11 +55,12 @@
                                         <div class="modal-body">
                                             <div class="item">订单id：{{ item.order.id }}</div>
                                             <div class="item">产品id：{{ item.order.productId }}</div>
-                                            <div class="item">产品名称：{{ item.name }}</div>
+                                            <div class="item">产品名称：{{ item.product_name==null?"产品已下架":item.product_name }}</div>
                                             <div class="item">数量：{{ item.order.number }}</div>
-                                            <div class="item">收货地址：{{ item.order.address }}</div>
                                             <div class="item">用户名：{{ item.username }}</div>
-                                            <div class="item">支付金额：￥{{ item.order.number*item.price }}</div>
+                                            <div class="item">电话号码：{{ item.order.phone }}</div>
+                                            <div class="item">收货地址：{{ item.order.address }}</div>
+                                            <div class="item">支付金额：￥{{ item.order.price }}</div>
                                             <div class="item">支付方式：{{ method[item.order.method] }}</div>
                                             <div class="item">创建时间：{{ item.order.createTime }}</div>
                                             <div class="item" v-if="item.order.sendTime!=null">发货时间：{{ item.order.sendTime }}</div>
@@ -113,7 +114,7 @@ export default{
         const method=["微信支付","支付宝支付"];
         const update_order=(id,sta)=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/order/update/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/order/update/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -154,7 +155,7 @@ export default{
             current_page=page;
             let condition=check.value;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/order/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/order/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -165,7 +166,6 @@ export default{
                 },
                 success(resp){
                     if(resp.message=="successful"){
-                        console.log(resp);
                         items.value=resp.items;
                         total_items=resp.items_count;
                         update_pages();

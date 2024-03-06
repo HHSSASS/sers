@@ -13,7 +13,7 @@ public class UpdateProductController {
     @Autowired
     private UpdateProductService updateProductService;
 
-    @PostMapping("/api/admin/product/update/")
+    @PostMapping("/api2/admin/product/update/")
     public JSONObject update(@RequestParam("id") String id,
                              @RequestParam("photo") MultipartFile photo,
                              @RequestParam("name") String name,

@@ -14,7 +14,7 @@ public class GetNoticeController {
     @Autowired
     private GetNoticeService getNoticeService;
 
-    @GetMapping("/api/notice/get/")
+    @GetMapping("/api2/notice/get/")
     public JSONObject get(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         return getNoticeService.get(id);

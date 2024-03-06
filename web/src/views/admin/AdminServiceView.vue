@@ -6,8 +6,9 @@
                 <div class="mess_user_list">
                     <div class="user">用户列表</div>
                     <div class="user_list">
-                        <div v-for="user in users" :key="user.id" @click="pull_dialogs(user)" class="user_list_item" :style="user==current_user?'background-color: rgb(230, 230, 230)':'background-color: white;'">
-                            <div style="padding-left: 10px;">{{ user.username }}</div>
+                        <div v-for="item in items" :key="item.user.id" @click="pull_dialogs(item.user)" class="user_list_item" :style="item.user==current_user?'background-color: rgb(230, 230, 230)':'background-color: white;'">
+                            <div style="margin-left: 10px;">{{ item.user.username }}</div>
+                            <div v-if="item.count" class="read">{{ item.count<100?item.count:"99+" }}</div>
                         </div>
                     </div>
                 </div>
@@ -19,7 +20,7 @@
                         <div class="content" v-for="(dialog,index) in dialogs" :key="dialog.id">
                             <div v-if="index===0||(new Date(dialogs[index].time)-new Date(dialogs[index-1].time))/(1000 * 60)>5" class="time">{{ dialog.time }}</div>
                             <div v-if="dialog.sendUserId===0" style="align-self: flex-end;">客服</div>
-                            <div v-else >{{ $store.state.user.username }}</div>
+                            <div v-else >{{ current_user.username }}</div>
                             <div v-if="dialog.sendUserId===0" class="content_me">{{ dialog.content }}</div>
                             <div v-else class="content_other">{{ dialog.content }}</div>                    
                         </div>
@@ -57,25 +58,25 @@ export default{
     },
     setup(){
         const store=useStore();
-        const socketurl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
+        const socketurl=`wss://app6418.acapp.acwing.com.cn/websocket2/${store.state.user.token}/`;
         let socket=null;
         let heartbeat_id;
         let content=ref('')
         let message=ref('');
-        let users=ref([]);
+        let items=ref([]);
         let current_user=ref()
         let dialogs=ref([]);
         let error=ref(false);
         const pull_users=()=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/user/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/dialog/user/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
                 },
                 success(resp){
                     if(resp.message==="successful"){
-                        users.value=resp.data;
+                        items.value=resp.items;
                     }
                 },
             })
@@ -84,8 +85,9 @@ export default{
         
         const pull_dialogs=user=>{
             current_user.value=user;
+            items.value[user.id-1].count=0;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/dialog/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/dialog/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -107,7 +109,7 @@ export default{
         const submit=()=>{
             message.value="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/dialog/add/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/dialog/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -150,10 +152,10 @@ export default{
                 socket.onmessage=msg=>{
                     const data=JSON.parse(msg.data);
                     if(data.event==="receive_dialog"){
-                        console.log(data.send_id);
-                        console.log(current_user.value.id)
-                        if(data.send_id===current_user.value.id){
+                        if(current_user.value!=undefined&&data.send_id===current_user.value.id){
                             pull_dialogs(current_user.value);
+                        }else{
+                            items.value[data.send_id-1].count+=1;
                         }
                     }else if(data.event==="heartbeat"){
                         //console.log("heartbeat");
@@ -177,7 +179,7 @@ export default{
         return{
             content,
             message,
-            users,
+            items,
             current_user,
             dialogs,
             error,
@@ -226,6 +228,7 @@ export default{
     border-right: 1px solid rgb(204, 232, 255);
     border-bottom: 1px solid rgb(204, 232, 255);
     display: flex;
+    justify-content: space-between;
     align-items: center;
     cursor: pointer;
 }
@@ -306,10 +309,16 @@ export default{
     border-top: 1px solid rgb(204, 232, 255);
     border-bottom-left-radius:8px;
 }
-.admin{
-    margin-left: auto;
+.read{
+    width: 20px;
+    height: 20px;
+    font-size: 10px;
+    border-radius: 100%;
+    background-color: red;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-right: 10px;
-    justify-content: flex-end;
-    cursor: pointer;
 }
 </style>

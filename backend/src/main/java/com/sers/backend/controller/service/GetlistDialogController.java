@@ -11,7 +11,7 @@ public class GetlistDialogController {
     @Autowired
     private GetlistDialogService getlistDialogService;
 
-    @GetMapping("/api/dialog/getlist/")
+    @GetMapping("/api2/dialog/getlist/")
     public JSONObject getlist(){
         return getlistDialogService.getlist();
     }

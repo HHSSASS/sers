@@ -1,7 +1,7 @@
-package com.sers.backend.controller.admin.service;
+package com.sers.backend.controller.admin.dialog;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sers.backend.service.admin.service.GetlistAdminDialogService;
+import com.sers.backend.service.admin.dialog.GetlistAdminDialogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +14,7 @@ public class GetlistAdminDialogController {
     @Autowired
     private GetlistAdminDialogService getlistServiceDialogService;
 
-    @GetMapping("/api/admin/dialog/getlist/")
+    @GetMapping("/api2/admin/dialog/getlist/")
     public JSONObject getlist(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         return getlistServiceDialogService.getlist(id);

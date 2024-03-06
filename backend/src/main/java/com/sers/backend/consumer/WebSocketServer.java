@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 @Component
-@ServerEndpoint("/websocket/{token}")
+@ServerEndpoint("/websocket2/{token}")
 public class WebSocketServer {
     final public static ConcurrentHashMap<Integer,WebSocketServer> users=new ConcurrentHashMap<>();
     private Session session=null;

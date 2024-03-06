@@ -56,10 +56,13 @@ public class GetlistAdminOrderServiceImpl implements GetlistAdminOrderService {
             JSONObject item=new JSONObject();
             User ord_user=userMapper.selectById(ord.getUserId());
             Product product=productMapper.selectById(ord.getProductId());
+            if(product==null){
+                item.put("product_name",null);
+            }else{
+                item.put("product_name",product.getName());
+            }
             item.put("order",ord);
             item.put("username",ord_user.getUsername());
-            item.put("name",product.getName());
-            item.put("price",product.getPrice());
             items.add(item);
         }
         resp.put("message","successful");

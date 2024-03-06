@@ -2,6 +2,7 @@ package com.sers.backend.service.impl.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.sers.backend.mapper.DialogMapper;
 import com.sers.backend.pojo.Dialog;
 import com.sers.backend.pojo.User;
@@ -31,6 +32,10 @@ public class GetlistDialogServiceImpl implements GetlistDialogService {
         JSONObject resp=new JSONObject();
         resp.put("message","successful");
         resp.put("data",dialogs);
+        UpdateWrapper<Dialog> updateWrapper=new UpdateWrapper<>();
+        updateWrapper.eq("send_user_id",0).eq("is_read",0);
+        updateWrapper.set("is_read",1);
+        dialogMapper.update(null,updateWrapper);
         return resp;
     }
 }

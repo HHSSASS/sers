@@ -14,7 +14,7 @@ public class AddNoticeController {
     @Autowired
     private AddNoticeService addNoticeService;
 
-    @PostMapping("/api/admin/notice/add/")
+    @PostMapping("/api2/admin/notice/add/")
     public JSONObject add(@RequestParam Map<String,String> data){
         String title=data.get("title");
         String content=data.get("content");

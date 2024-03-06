@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InfoController {
     @Autowired
     private InfoService infoService;
-    @GetMapping("/api/user/account/info/")
+    @GetMapping("/api2/user/account/info/")
     public JSONObject getinfo(){
         return infoService.getinfo();
     }

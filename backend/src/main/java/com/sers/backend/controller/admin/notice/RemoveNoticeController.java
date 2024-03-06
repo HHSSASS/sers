@@ -14,7 +14,7 @@ public class RemoveNoticeController {
     @Autowired
     private RemoveNoticeService removeNoticeService;
 
-    @PostMapping("/api/admin/notice/remove/")
+    @PostMapping("/api2/admin/notice/remove/")
     public JSONObject remove(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         return removeNoticeService.remove(id);

@@ -14,7 +14,7 @@ public class AddDialogController {
     @Autowired
     private AddDialogService addDialogService;
 
-    @PostMapping("/api/dialog/add")
+    @PostMapping("/api2/dialog/add")
     public JSONObject add(@RequestParam Map<String,String> data){
         String content=data.get("content");
         return addDialogService.add(content);

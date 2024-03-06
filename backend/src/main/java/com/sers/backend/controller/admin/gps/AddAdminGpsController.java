@@ -14,7 +14,7 @@ public class AddAdminGpsController {
     @Autowired
     private AddAdminGpsService addAdminGpsService;
 
-    @PostMapping("/api/admin/gps/add/")
+    @PostMapping("/api2/admin/gps/add/")
     public JSONObject add(@RequestParam Map<String,String> data){
         String number=data.get("number");
         String type=data.get("type");

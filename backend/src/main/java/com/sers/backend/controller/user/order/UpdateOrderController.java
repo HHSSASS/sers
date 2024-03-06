@@ -14,7 +14,7 @@ public class UpdateOrderController {
     @Autowired
     private UpdateOrderService updateOrderService;
 
-    @PostMapping("/api/order/update/")
+    @PostMapping("/api2/order/update/")
     public JSONObject update(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         Integer status=Integer.parseInt(data.get("status"));

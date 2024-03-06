@@ -1,42 +1,40 @@
-package com.sers.backend.service.impl.service;
+package com.sers.backend.service.impl.admin.permission;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sers.backend.mapper.DialogMapper;
+import com.sers.backend.mapper.UserMapper;
 import com.sers.backend.pojo.Dialog;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.service.AddDialogService;
+import com.sers.backend.service.admin.permission.GetlistUserService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @Service
-public class AddDialogServiceImpl implements AddDialogService {
+public class GetlistUserServiceImpl implements GetlistUserService {
     @Autowired
-    private DialogMapper dialogMapper;
+    private UserMapper userMapper;
 
     @Override
-    public JSONObject add(String content) {
+    public JSONObject getlist() {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
         User user = loginUser.getUser();
         JSONObject resp=new JSONObject();
-        if(content.length()==0) {
-            resp.put("message", "内容不能为空");
+        if(!user.getAdmin()){
+            resp.put("message","无管理员权限");
             return resp;
         }
-        if(content.length()>500){
-            resp.put("message","内容长度不能大于500");
-            return resp;
-        }
-        Date now=new Date();
-        Dialog dialog=new Dialog(null,user.getId(),0,content,now,false);
-        dialogMapper.insert(dialog);
+        List<User> users=userMapper.selectList(null);
         resp.put("message","successful");
+        resp.put("users",users);
         return resp;
     }
 }

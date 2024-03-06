@@ -76,7 +76,7 @@ public class UpdateOrderServiceImpl implements UpdateOrderService {
             }
             refund=new Date();
         }
-        Ord new_ord=new Ord(ord.getId(),ord.getUserId(),ord.getProductId(),ord.getAddress(),ord.getNumber(),ord.getMethod(),ord.getCreateTime(),
+        Ord new_ord=new Ord(ord.getId(),ord.getUserId(),ord.getProductId(),ord.getNumber(),ord.getPhone(),ord.getAddress(),ord.getPrice(),ord.getMethod(),ord.getCreateTime(),
                 send,finish,refund,status);
         ordMapper.updateById(new_ord);
         resp.put("message","successful");

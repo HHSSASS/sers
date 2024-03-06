@@ -14,7 +14,7 @@ public class UpdateNoticeController {
     @Autowired
     private UpdateNoticeService updateNoticeService;
 
-    @PostMapping("/api/admin/notice/update/")
+    @PostMapping("/api2/admin/notice/update/")
     public JSONObject update(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         String title=data.get("title");

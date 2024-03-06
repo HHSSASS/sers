@@ -14,7 +14,7 @@ public class RemoveProductController {
     @Autowired
     private RemoveProductService removeProductService;
 
-    @PostMapping("/api/admin/product/remove/")
+    @PostMapping("/api2/admin/product/remove/")
     public JSONObject remove(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         return removeProductService.remove(id);

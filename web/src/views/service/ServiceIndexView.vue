@@ -38,7 +38,7 @@ export default{
     },
     setup(){
         const store=useStore();
-        const socketurl=`ws://127.0.0.1:3000/websocket/${store.state.user.token}/`;
+        const socketurl=`wss://app6418.acapp.acwing.com.cn/websocket2/${store.state.user.token}/`;
         let socket=null;
         let heartbeat_id;
         let content=ref('');
@@ -47,7 +47,7 @@ export default{
         let error=ref(false);
         const pull_dialogs=()=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/dialog/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/dialog/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -68,7 +68,7 @@ export default{
         const submit=()=>{
             message.value="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/dialog/add/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/dialog/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -138,7 +138,6 @@ export default{
     beforeUnmount () {
       document.querySelector('body').removeAttribute('style')
     },
-    //SELECT （发送人，count(*)） FROM 表 where 发送人！=客服  and 未读=1  GROUP BY 发送人
 }
 </script>
 

@@ -74,7 +74,8 @@ public class AddProductServiceImpl implements AddProductService {
         }
         Product product=new Product(null,null,name,description,price_num);
         productMapper.insert(product);
-        String path="D:\\temp\\Development project\\SpringBoot\\sers\\web\\src\\assets\\images\\"+product.getId().toString()+".png";
+        String path="/home/hh/sers/images/"+product.getId().toString()+".png";
+        String photo_url="https://app6418.acapp.acwing.com.cn/images2/"+product.getId().toString()+".png";
         File toFile=new File(path);
         if (toFile.exists()) {
             toFile.delete();
@@ -84,7 +85,7 @@ public class AddProductServiceImpl implements AddProductService {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Product new_product=new Product(product.getId(),path,name,description,price_num);
+        Product new_product=new Product(product.getId(),photo_url,name,description,price_num);
         productMapper.updateById(new_product);
         resp.put("message","successful");
         return resp;

@@ -17,8 +17,10 @@ public class Ord {
     private Integer id;
     private Integer userId;
     private Integer productId;
-    private String address;
     private Integer number;
+    private String phone;
+    private String address;
+    private Double price;
     private Integer method;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="Asia/Shanghai")
     private Date createTime;

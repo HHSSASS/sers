@@ -53,7 +53,7 @@
                             <span>{{ product.id }}</span>
                         </td>
                         <td>
-                            <img :src="require('@/assets/images/'+product.id+'.png')" alt="" width="50px">
+                            <img :src="product.photo" alt="" width="50px">
                         </td>
                         <td>
                             <span>{{ product.name.slice(0,20)+(product.name.length<=20?"":"...") }}</span>
@@ -168,7 +168,7 @@ export default{
             formData.append("description",new_product.description)
             formData.append("price",new_product.price)
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/product/add/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/product/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -210,7 +210,7 @@ export default{
             formData.append("description",product.description)
             formData.append("price",product.price)
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/product/update/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/product/update/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -233,7 +233,7 @@ export default{
         }
         const remove_product=(id)=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/product/remove/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/product/remove/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -278,7 +278,7 @@ export default{
         const pull_page=page=>{
             current_page=page;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/product/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/product/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,

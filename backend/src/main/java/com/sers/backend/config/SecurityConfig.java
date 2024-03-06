@@ -39,10 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/api/user/account/login/",
-                        "/api/user/account/register/",
-                        "/api/notice/getlist/",
-                        "/api/notice/get/"
+                        "/api2/user/account/login/",
+                        "/api2/user/account/register/",
+                        "/api2/notice/getlist/",
+                        "/api2/notice/get/"
                 ).permitAll()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
                 .anyRequest().authenticated();
@@ -52,6 +52,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/websocket/**");
+        web.ignoring().antMatchers("/websocket2/**");
     }
 }

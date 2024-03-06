@@ -14,7 +14,7 @@ public class GetlistOrderController {
     @Autowired
     private GetlistOrderService getlistOrderService;
 
-    @GetMapping("/api/order/getlist/")
+    @GetMapping("/api2/order/getlist/")
     public JSONObject getlist(@RequestParam Map<String,String> data){
         Integer page=Integer.parseInt(data.get("page"));
         Integer condition=Integer.parseInt(data.get("condition"));

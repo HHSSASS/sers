@@ -14,12 +14,13 @@ public class AddOrderController {
     @Autowired
     private AddOrderService addOrderService;
 
-    @PostMapping("/api/order/add/")
+    @PostMapping("/api2/order/add/")
     public JSONObject add(@RequestParam Map<String,String> data){
         Integer product_id=Integer.parseInt(data.get("id"));
-        String address=data.get("address");
         String number=data.get("number");
+        String phone=data.get("phone");
+        String address=data.get("address");
         Integer method=Integer.parseInt(data.get("method"));
-        return addOrderService.add(product_id,address,number,method);
+        return addOrderService.add(product_id,number,phone,address,method);
     }
 }

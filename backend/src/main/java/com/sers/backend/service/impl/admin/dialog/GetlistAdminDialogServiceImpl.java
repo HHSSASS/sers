@@ -1,9 +1,12 @@
-package com.sers.backend.service.impl.admin;
+package com.sers.backend.service.impl.admin.dialog;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sers.backend.mapper.UserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.sers.backend.mapper.DialogMapper;
+import com.sers.backend.pojo.Dialog;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.GetlistUserService;
+import com.sers.backend.service.admin.dialog.GetlistAdminDialogService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,12 +16,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class GetlistUserServiceImpl implements GetlistUserService {
+public class GetlistAdminDialogServiceImpl implements GetlistAdminDialogService {
     @Autowired
-    private UserMapper userMapper;
+    private DialogMapper dialogMapper;
 
     @Override
-    public JSONObject getlist() {
+    public JSONObject getlist(Integer id) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
@@ -28,9 +31,15 @@ public class GetlistUserServiceImpl implements GetlistUserService {
             resp.put("message","无管理员权限");
             return resp;
         }
-        List<User> users=userMapper.selectList(null);
+        QueryWrapper<Dialog> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("send_user_id",id).or().eq("receive_user_id",id);
+        List<Dialog> dialogs=dialogMapper.selectList(queryWrapper);
         resp.put("message","successful");
-        resp.put("data",users);
+        resp.put("data",dialogs);
+        UpdateWrapper<Dialog> updateWrapper=new UpdateWrapper<>();
+        updateWrapper.eq("send_user_id",id).eq("is_read",0);
+        updateWrapper.set("is_read",1);
+        dialogMapper.update(null,updateWrapper);
         return resp;
     }
 }

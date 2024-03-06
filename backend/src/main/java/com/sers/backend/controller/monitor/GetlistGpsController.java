@@ -14,7 +14,7 @@ public class GetlistGpsController {
     @Autowired
     private GetlistGpsService getlistGpsService;
 
-    @GetMapping("/api/gps/getlist/")
+    @GetMapping("/api2/gps/getlist/")
     public JSONObject getlist(@RequestParam Map<String,String> data){
         Integer page=Integer.parseInt(data.get("page"));
         return getlistGpsService.getlist(page);

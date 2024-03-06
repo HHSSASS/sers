@@ -27,7 +27,7 @@ export default{
             let index = window.location.href.lastIndexOf('/');
             let id=window.location.href.slice(index+1)
             $.ajax({
-                url:"http://127.0.0.1:3000/api/notice/get/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/notice/get/",
                 type:"get",
                 data:{
                     id:id,

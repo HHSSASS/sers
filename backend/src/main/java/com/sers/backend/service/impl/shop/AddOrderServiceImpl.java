@@ -23,7 +23,7 @@ public class AddOrderServiceImpl implements AddOrderService {
     private ProductMapper productMapper;
 
     @Override
-    public JSONObject add(Integer product_id, String address, String number, Integer method) {
+    public JSONObject add(Integer product_id, String number, String phone, String address, Integer method) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
@@ -32,14 +32,6 @@ public class AddOrderServiceImpl implements AddOrderService {
         Product product=productMapper.selectById(product_id);
         if(product==null){
             resp.put("message","产品不存在或已下架");
-            return resp;
-        }
-        if(address==null||address.length()==0){
-            resp.put("message","收货地址不能为空");
-            return resp;
-        }
-        if(address.length()>100){
-            resp.put("message","收货地址长度不能大于100");
             return resp;
         }
         Integer number_num;
@@ -53,12 +45,28 @@ public class AddOrderServiceImpl implements AddOrderService {
             resp.put("message","请输入正确购买数量");
             return resp;
         }
+        if(phone==null||phone.length()==0){
+            resp.put("message","电话号码不能为空");
+            return resp;
+        }
+        if(!phone.matches("^1(3[0-9]|4[01456879]|5[0-35-9]|6[2567]|7[0-8]|8[0-9]|9[0-35-9])\\d{8}$")){
+            resp.put("message","请输入正确电话号码");
+            return resp;
+        }
+        if(address==null||address.length()==0){
+            resp.put("message","收货地址不能为空");
+            return resp;
+        }
+        if(address.length()>100){
+            resp.put("message","收货地址长度不能大于100");
+            return resp;
+        }
         if(method!=0&&method!=1){
             resp.put("message","请选择支付方式");
             return resp;
         }
         Date now=new Date();
-        Ord ord=new Ord(null,user.getId(),product_id,address,number_num,method,now,null,null,null,1);
+        Ord ord=new Ord(null,user.getId(),product_id,number_num,phone,address,number_num*product.getPrice(),method,now,null,null,null,1);
         ordMapper.insert(ord);
         resp.put("message","successful");
         return resp;

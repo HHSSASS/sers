@@ -26,7 +26,7 @@
             <router-link :class="route_name == 'monitor_index' ? 'nav-link active' : 'nav-link'" :to="{name:'monitor_index'}">监测平台</router-link>
           </li>
           <li class="nav-item" v-if="$store.state.user.admin">
-            <router-link :class="route_name == 'admin_index' ? 'nav-link active' : 'nav-link'" :to="{name:'admin_index'}">管理系统</router-link>
+            <router-link :class="route_name!=undefined&&route_name.slice(0,5) == 'admin' ? 'nav-link active' : 'nav-link'" :to="{name:'admin_index'}">管理系统</router-link>
           </li>
         </ul>
         <ul class="navbar-nav" v-if="$store.state.user.is_login">

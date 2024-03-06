@@ -14,7 +14,7 @@ public class GetlistNoticeController {
     @Autowired
     private GetlistNoticeService getNoticeService;
 
-    @GetMapping("/api/notice/getlist/")
+    @GetMapping("/api2/notice/getlist/")
     public JSONObject get(@RequestParam Map<String,String> data){
         Integer page=Integer.parseInt(data.get("page"));
         Integer number=Integer.parseInt(data.get("number"));

@@ -94,7 +94,7 @@ export default{
         const add_gps=()=>{
             new_gps.message="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/gps/add/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/gps/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -140,7 +140,7 @@ export default{
         const pull_page=page=>{
             current_page=page;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/admin/gps/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/admin/gps/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
@@ -149,7 +149,6 @@ export default{
                     page:page,
                 },
                 success(resp){
-                    console.log(resp);
                     items.value=resp.items;
                     total_items=resp.items_count;
                     update_pages();

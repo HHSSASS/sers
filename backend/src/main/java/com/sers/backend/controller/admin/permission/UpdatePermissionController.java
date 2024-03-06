@@ -14,7 +14,7 @@ public class UpdatePermissionController {
     @Autowired
     private UpdatePermissionService addAdminService;
 
-    @PostMapping("/api/admin/permission/update/")
+    @PostMapping("/api2/admin/permission/update/")
     public JSONObject add(@RequestParam Map<String,String> data){
         Integer id=Integer.parseInt(data.get("id"));
         return addAdminService.add(id);

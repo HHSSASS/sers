@@ -1,26 +1,25 @@
-package com.sers.backend.service.impl.admin.service;
+package com.sers.backend.service.impl.admin.dialog;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sers.backend.mapper.DialogMapper;
 import com.sers.backend.pojo.Dialog;
 import com.sers.backend.pojo.User;
-import com.sers.backend.service.admin.service.GetlistAdminDialogService;
+import com.sers.backend.service.admin.dialog.AddAdminDialogService;
 import com.sers.backend.utils.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Date;
 
 @Service
-public class GetlistAdminDialogServiceImpl implements GetlistAdminDialogService {
+public class AddAdminDialogServiceImpl implements AddAdminDialogService {
     @Autowired
     private DialogMapper dialogMapper;
 
     @Override
-    public JSONObject getlist(Integer id) {
+    public JSONObject add(Integer id, String content) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
@@ -30,11 +29,18 @@ public class GetlistAdminDialogServiceImpl implements GetlistAdminDialogService 
             resp.put("message","无管理员权限");
             return resp;
         }
-        QueryWrapper<Dialog> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("send_user_id",id).or().eq("receive_user_id",id);
-        List<Dialog> dialogs=dialogMapper.selectList(queryWrapper);
+        if(content.length()==0) {
+            resp.put("message", "内容不能为空");
+            return resp;
+        }
+        if(content.length()>500){
+            resp.put("message","内容长度不能大于500");
+            return resp;
+        }
+        Date now=new Date();
+        Dialog dialog=new Dialog(null,0,id,content,now,false);
+        dialogMapper.insert(dialog);
         resp.put("message","successful");
-        resp.put("data",dialogs);
         return resp;
     }
 }

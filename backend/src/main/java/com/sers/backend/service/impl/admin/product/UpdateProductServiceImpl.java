@@ -78,7 +78,8 @@ public class UpdateProductServiceImpl implements UpdateProductService {
             return resp;
         }
         if(photo!=null){
-            File toFile=new File(product.getPhoto());
+            String path="/home/hh/sers/images/"+product.getId().toString()+".png";
+            File toFile=new File(path);
             if (toFile.exists()) {
                 toFile.delete();
             }

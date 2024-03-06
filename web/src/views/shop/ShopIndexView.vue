@@ -10,7 +10,7 @@
         <div class="title">热销产品</div>
         <div class="row">
             <div v-for="product in products" :key="product.id" class="card border-dark" style="width: 16rem;margin-right: 10px;margin-bottom: 10px;text-align: center;">
-                <img :src="require('@/assets/images/'+product.id+'.png')" class="card-img-top" alt="">
+                <img :src="product.photo" class="card-img-top" alt="">
                 <div class="card-body" style="display: flex;flex-direction: column;justify-content: flex-end;align-items: center;">
                     <h5 class="card-title" >{{ product.name.slice(0,10)+(product.name.length<=10?"":"...") }}</h5>
                     <p class="card-text">￥{{ product.price }}</p>
@@ -36,6 +36,10 @@
                                     <div class="item">
                                         <div>购买数量：</div>
                                         <input v-model="product.number" type="number" class="form-control form-control-sm" min=1 max=99 style="width: 10%;">
+                                    </div>
+                                    <div class="item">
+                                        <div>电话号码：</div>
+                                        <input v-model="product.phone" type="text" class="form-control form-control-sm" placeholder="请输入电话号码" style="width: 80%;">
                                     </div>
                                     <div class="item">
                                         <div>收货地址：</div>
@@ -197,13 +201,14 @@ export default{
         const add_order=(product)=>{
             product.message="";
             $.ajax({
-                url:"http://127.0.0.1:3000/api/order/add/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/order/add/",
                 type:"post",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,
                 },
                 data:{
                     id:product.id,
+                    phone:product.phone,
                     address:product.address,
                     number:product.number,
                     method:product.method,
@@ -245,7 +250,7 @@ export default{
         const pull_page=page=>{
             current_page=page;
             $.ajax({
-                url:"http://127.0.0.1:3000/api/product/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/product/getlist/",
                 type:"get",
                 headers:{
                     Authorization:"Bearer "+store.state.user.token,

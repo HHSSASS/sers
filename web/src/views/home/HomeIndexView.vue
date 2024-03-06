@@ -35,7 +35,7 @@
         <div class="title">线上商城</div>
         <div class="iconfont icon-hengxian1"></div>
         <div style="display: flex; padding-left: 50px;padding-top:50px;">
-            <img src="@/assets/images/3.0.png" alt="" width="20%" height="20%">
+            <img src="@/assets/images/shop.png" alt="" width="20%" height="20%">
             <div>
                 <div class="content">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -58,7 +58,7 @@ export default{
         let notices=ref([]);
         const pull_notice=()=>{
             $.ajax({
-                url:"http://127.0.0.1:3000/api/notice/getlist/",
+                url:"https://app6418.acapp.acwing.com.cn/api2/notice/getlist/",
                 type:"get",
                 data:{
                     page:1,

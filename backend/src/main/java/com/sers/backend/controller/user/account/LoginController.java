@@ -13,7 +13,7 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private LoginService loginService;
-    @PostMapping("/api/user/account/login/")
+    @PostMapping("/api2/user/account/login/")
     public JSONObject login(@RequestParam Map<String,String> map){
         String username=map.get("username");
         String password=map.get("password");
